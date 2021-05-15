@@ -20,11 +20,11 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.catdou.validate.cache.ValidatorCache;
 import org.catdou.validate.factory.ParamConfigFactory;
 import org.catdou.validate.factory.ParamConfigLoader;
+import org.catdou.validate.log.ValidatorLog;
+import org.catdou.validate.log.ValidatorLogFactory;
 import org.catdou.validate.model.config.ParamConfig;
 import org.catdou.validate.processor.ValidateProcessor;
 import org.catdou.validate.request.ServletRequestParamWrapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -40,7 +40,7 @@ import java.io.IOException;
  * @author James
  */
 public class ParamFilter implements Filter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ParamFilter.class);
+    private static final ValidatorLog LOGGER = ValidatorLogFactory.getLogger(ParamFilter.class);
 
     private ParamConfigFactory paramConfigFactory = new ParamConfigFactory();
 

@@ -20,14 +20,14 @@ import org.catdou.validate.enums.ValidatorType;
 import org.catdou.validate.type.ParamValidator;
 import org.catdou.validate.type.RegexpValidator;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author James
  */
 public class ValidatorCache {
-    private Map<String, ParamValidator> paramValidatorMap = new HashMap<>();
+    private Map<String, ParamValidator> paramValidatorMap = new ConcurrentHashMap<>();
 
     public ValidatorCache() {
         add(ValidatorType.REGEXP.name(), new RegexpValidator());

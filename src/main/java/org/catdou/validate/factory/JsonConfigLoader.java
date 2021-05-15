@@ -21,11 +21,11 @@ import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.io.FileUtils;
 import org.catdou.validate.exception.ConfigException;
 import org.catdou.validate.exception.ParseException;
+import org.catdou.validate.log.ValidatorLog;
+import org.catdou.validate.log.ValidatorLogFactory;
 import org.catdou.validate.model.config.CommonConfig;
 import org.catdou.validate.model.config.ParamConfig;
 import org.catdou.validate.model.config.UrlRuleBean;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -43,7 +43,7 @@ import java.util.stream.Collectors;
  * @author James
  */
 public class JsonConfigLoader implements ParamConfigLoader {
-    private static final Logger LOGGER = LoggerFactory.getLogger(JsonConfigLoader.class);
+    private static final ValidatorLog LOGGER = ValidatorLogFactory.getLogger(JsonConfigLoader.class);
 
     private static final String COMMON_NAME = "validate_common_config.json";
 
@@ -61,7 +61,8 @@ public class JsonConfigLoader implements ParamConfigLoader {
     public ParamConfig loadByPathMatchingResource(String path) throws IOException {
         ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
         Resource[] resources = resourcePatternResolver.getResources(path);
-        List<Resource> resourceList = Arrays.stream(resources).filter(resource -> COMMON_NAME.equals(resource.getFilename()))
+        List<Resource> resourceList = Arrays.stream(resources)
+                .filter(resource -> COMMON_NAME.equals(resource.getFilename()))
                 .collect(Collectors.toList());
         if (resourceList.size() != 1) {
             throw new ConfigException(COMMON_NAME + " config error");

@@ -67,7 +67,7 @@ public class ValidatorLogFactory {
         try {
             return (Constructor<? extends ValidatorLog>) clazz.getConstructor(Class.class);
         } catch (NoSuchMethodException e) {
-            throw new ReflectException("construct clazz errror ", e);
+            throw new ReflectException("construct clazz error ", e);
         }
     }
 }

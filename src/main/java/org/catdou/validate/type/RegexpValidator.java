@@ -22,13 +22,14 @@ import org.catdou.validate.model.config.CheckRule;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 
 /**
  * @author James
  */
 public class RegexpValidator implements ParamValidator {
-    private Map<String, Pattern> patternMap = new HashMap<>(16);
+    private Map<String, Pattern> patternMap = new ConcurrentHashMap<>(16);
 
     @Override
     public ValidateResult validate(InputParam inputParam, CheckRule checkRule) {

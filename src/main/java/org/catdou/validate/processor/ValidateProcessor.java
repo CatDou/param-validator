@@ -17,6 +17,8 @@
 package org.catdou.validate.processor;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import org.catdou.validate.log.ValidatorLog;
+import org.catdou.validate.log.ValidatorLogFactory;
 import org.catdou.validate.util.UrlMatchHelper;
 import org.catdou.validate.exception.ConfigException;
 import org.catdou.validate.model.config.Param;
@@ -37,6 +39,8 @@ import java.util.List;
  * @author James
  */
 public class ValidateProcessor {
+    private static final ValidatorLog LOGGER = ValidatorLogFactory.getLogger(ValidateProcessor.class);
+
     private ParamConfig paramConfig;
 
     private ServletRequestParamWrapper httpServletRequest;
@@ -74,6 +78,7 @@ public class ValidateProcessor {
             UrlParamProcessor urlParamProcessor = new UrlParamProcessor();
             setBaseCommonProperties(urlParamProcessor, urlRuleBean);
             if (!urlParamProcessor.validate()) {
+                LOGGER.error("validate url param error, url " + httpServletRequest.getServletPath());
                 return;
             }
         }
@@ -82,6 +87,7 @@ public class ValidateProcessor {
             PathParamProcessor pathParamProcessor = new PathParamProcessor();
             setBaseCommonProperties(pathParamProcessor, urlRuleBean);
             if (!pathParamProcessor.validate()) {
+                LOGGER.error("validate path param error, url " + httpServletRequest.getServletPath());
                 return;
             }
         }
@@ -90,6 +96,7 @@ public class ValidateProcessor {
             BodyParamProcessor bodyParamProcessor = new BodyParamProcessor();
             setBaseCommonProperties(bodyParamProcessor, urlRuleBean);
             if (!bodyParamProcessor.validate()) {
+                LOGGER.error("validate body param error, url " + httpServletRequest.getServletPath());
                 return;
             }
         }

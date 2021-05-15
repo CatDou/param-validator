@@ -72,6 +72,7 @@ public class BaseParamProcessor {
         for (CheckRule checkRule : checkRuleList) {
             ParamValidator paramValidator = getParamValidator(validatorCache, checkRule);
             InputParam inputParam = new InputParam(configName, reqParam);
+            checkRule.setParamConfig(paramConfig);
             ValidateResult validateResult = paramValidator.validate(inputParam, checkRule);
             if (!validateResult.isSuccess()) {
                 HttpUtil.printObject(httpServletResponse, validateResult);

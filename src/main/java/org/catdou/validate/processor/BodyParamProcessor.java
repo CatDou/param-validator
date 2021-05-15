@@ -80,7 +80,9 @@ public class BodyParamProcessor extends BaseParamProcessor {
                 if (CollectionUtils.isEmpty(ruleList)) {
                     continue;
                 }
-                if (!checkComplex(ruleList.get(0), configName, dataObj)) {
+                CheckRule checkRule = ruleList.get(0);
+                checkRule.setParamConfig(paramConfig);
+                if (!checkComplex(checkRule, configName, dataObj)) {
                     return false;
                 }
             }
