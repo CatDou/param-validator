@@ -1,0 +1,46 @@
+[
+  {
+    "url":"/param/body/{key}",
+    "method":"post",
+    "urlParams": [
+      {
+        "name": "taskId",
+        "rules": [
+          {
+            "name": "REGEXP",
+            "value": "\\d+{0,20}"
+          }
+        ]
+      }
+    ],
+    "pathParams": [
+      {
+        "name": "{key}",
+        "rules": [
+          {
+            "name": "REGEXP",
+            "value": "\\d+{0,20}"
+          }
+        ]
+      }
+    ],
+    "bodyParams": [
+      {
+        "name": "id",
+        "rules": [
+          {
+            "name": "REGEXP",
+            "value": "\\d+"
+          },
+          {
+            "name": "DEFINE",
+            "value": "com.scd.mvctest.define.ParamDefineValidator"
+          }
+        ]
+      }
+    ],
+    "maxBodySize": 100000,
+    "checkAllParam":true,
+    "sort": 0
+  }
+]

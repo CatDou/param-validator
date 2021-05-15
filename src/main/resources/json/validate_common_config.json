@@ -1,0 +1,9 @@
+{
+  "checkAllUrl": false,
+  "whiteList" : [
+    "/**/*.html",
+    "/**/*.js",
+    "/**/*.css"
+  ],
+  "maxBodySize": 100000
+}
