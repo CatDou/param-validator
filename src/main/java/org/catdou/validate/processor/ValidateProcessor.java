@@ -17,7 +17,7 @@
 package org.catdou.validate.processor;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
-import org.catdou.validate.UrlMatchHelper;
+import org.catdou.validate.util.UrlMatchHelper;
 import org.catdou.validate.exception.ConfigException;
 import org.catdou.validate.model.config.Param;
 import org.catdou.validate.model.config.ParamConfig;

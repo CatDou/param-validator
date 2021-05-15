@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.catdou.validate;
+package org.catdou.validate.util;
 
 import org.springframework.util.AntPathMatcher;
 
