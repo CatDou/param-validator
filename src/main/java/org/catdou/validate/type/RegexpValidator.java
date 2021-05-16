@@ -19,8 +19,6 @@ package org.catdou.validate.type;
 import org.catdou.validate.model.InputParam;
 import org.catdou.validate.model.ValidateResult;
 import org.catdou.validate.model.config.CheckRule;
-
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
@@ -40,7 +38,7 @@ public class RegexpValidator implements ParamValidator {
             patternMap.put(checkRule.getValue(), pattern);
         }
         ValidateResult validateResult = new ValidateResult();
-        if (pattern.matcher(inputParam.getParam()).matches()) {
+        if (pattern.matcher(inputParam.getParam().toString()).matches()) {
             validateResult.setSuccess(true);
         } else {
             validateResult.setSuccess(false);

@@ -23,6 +23,7 @@ import org.catdou.validate.exception.ConfigException;
 import org.catdou.validate.model.InputParam;
 import org.catdou.validate.model.ValidateResult;
 import org.catdou.validate.model.config.CheckRule;
+import org.catdou.validate.model.config.Param;
 import org.catdou.validate.model.config.ParamConfig;
 import org.catdou.validate.model.config.UrlRuleBean;
 import org.catdou.validate.request.ServletRequestParamWrapper;
@@ -67,7 +68,23 @@ public class BaseParamProcessor {
         return paramValidator;
     }
 
-    public boolean checkRule(String configName, String reqParam, List<CheckRule> checkRuleList) {
+    public boolean checkRule(Param configParam, Object reqParam, List<CheckRule> checkRuleList) {
+        String configName = configParam.getName();
+        if (reqParam == null) {
+            if (configParam.isNullable()) {
+                return true;
+            } else {
+                ValidateResult validateResult = new ValidateResult();
+                String msg = "request param " + configName + " is null";
+                validateResult.setMsg(msg);
+                HttpUtil.printObject(httpServletResponse, validateResult);
+                return false;
+            }
+        }
+        return checkRule(configName, reqParam, checkRuleList);
+    }
+
+    public boolean checkRule(String configName, Object reqParam, List<CheckRule> checkRuleList) {
         ValidatorCache validatorCache = paramConfig.getValidatorCache();
         for (CheckRule checkRule : checkRuleList) {
             ParamValidator paramValidator = getParamValidator(validatorCache, checkRule);

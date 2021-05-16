@@ -26,6 +26,8 @@ public class Param {
 
     private List<CheckRule> rules;
 
+    private boolean nullable;
+
     public String getName() {
         return name;
     }
@@ -40,5 +42,13 @@ public class Param {
 
     public void setRules(List<CheckRule> rules) {
         this.rules = rules;
+    }
+
+    public boolean isNullable() {
+        return nullable;
+    }
+
+    public void setNullable(boolean nullable) {
+        this.nullable = nullable;
     }
 }

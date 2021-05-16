@@ -22,18 +22,10 @@ package org.catdou.validate.model;
 public class InputParam {
     private String name;
 
-    private String param;
+    private Object param;
 
-    public InputParam(String name, String param) {
+    public InputParam(String name, Object param) {
         this.name = name;
-        this.param = param;
-    }
-
-    public String getParam() {
-        return param;
-    }
-
-    public void setParam(String param) {
         this.param = param;
     }
 
@@ -43,5 +35,13 @@ public class InputParam {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Object getParam() {
+        return param;
+    }
+
+    public void setParam(Object param) {
+        this.param = param;
     }
 }

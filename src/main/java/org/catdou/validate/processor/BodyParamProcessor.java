@@ -86,7 +86,7 @@ public class BodyParamProcessor extends BaseParamProcessor {
                     return false;
                 }
             }
-            if (!checkRule(configName, dataObj.toString(), checkRuleList)) {
+            if (!checkRule(param, dataObj, checkRuleList)) {
                 return false;
             }
         }

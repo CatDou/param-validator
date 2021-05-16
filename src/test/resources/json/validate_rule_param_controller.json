@@ -10,7 +10,8 @@
             "name": "REGEXP",
             "value": "\\d+{0,20}"
           }
-        ]
+        ],
+        "nullable":true
       }
     ],
     "pathParams": [

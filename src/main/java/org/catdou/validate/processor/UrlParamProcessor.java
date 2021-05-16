@@ -37,7 +37,7 @@ public class UrlParamProcessor extends BaseParamProcessor {
             String configName = param.getName();
             String reqParam = httpServletRequest.getParameter(configName);
             List<CheckRule> checkRuleList = param.getRules();
-            if (!checkRule(configName, reqParam, checkRuleList)) {
+            if (!checkRule(param, reqParam, checkRuleList)) {
                 return false;
             }
         }

@@ -49,7 +49,7 @@ public class PathParamProcessor extends BaseParamProcessor {
             String configName = param.getName();
             List<CheckRule> checkRuleList = param.getRules();
             String reqParam = paramMap.get(configName);
-            if (!checkRule(configName, reqParam, checkRuleList)) {
+            if (!checkRule(param, reqParam, checkRuleList)) {
                 return false;
             }
         }
