@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<urls>
+    <url name="/param/body/{key}" method = "post">
+        <urlParams>
+            <param name="taskId" nullable="true">
+                <rules>
+                    <rule name="REGEXP" value="\d+{0,20}" />
+                </rules>
+            </param>
+        </urlParams>
+        <pathParams>
+            <param name="{key}">
+                <rules>
+                    <rule name="REGEXP" value="\d+{0,20}" />
+                </rules>
+            </param>
+        </pathParams>
+        <bodyParams>
+            <param name="id">
+                <rules>
+                    <rule name="REGEXP" value="\d+{0,20}" />
+                    <rule name="DEFINE" value="com.scd.mvctest.define.ParamDefineValidator" />
+                </rules>
+            </param>
+        </bodyParams>
+    </url>
+</urls>

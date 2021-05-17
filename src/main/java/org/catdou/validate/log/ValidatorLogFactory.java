@@ -17,6 +17,7 @@
 package org.catdou.validate.log;
 
 import org.catdou.validate.exception.ReflectException;
+import org.catdou.validate.log.jdk.JdkLogger;
 import org.catdou.validate.log.slf4j.Slf4jLogger;
 
 import java.lang.reflect.Constructor;
@@ -35,6 +36,7 @@ public class ValidatorLogFactory {
 
     static {
         logMap.put("org.slf4j.Logger", getConstructor(Slf4jLogger.class));
+        logMap.put("java.util.logging.Logger", getConstructor(JdkLogger.class));
         logMap.forEach((className, constructor) -> {
             if (findClazz == null) {
                 try {

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<common>
+    <checkAllUrl>false</checkAllUrl>
+    <whiteList>
+        <url>/**/*.html</url>
+        <url>/**/*.js</url>
+        <url>/**/*.css</url>
+    </whiteList>
+    <maxBodySize>100000</maxBodySize>
+</common>
