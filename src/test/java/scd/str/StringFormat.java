@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
-package org.catdou.validate.enums;
+package scd.str;
+
+import org.catdou.validate.constant.ParamValidatorConstant;
+import org.junit.Test;
 
 /**
  * @author James
  */
-public enum  ValidatorType {
-    REGEXP,DEFINE,OGNL
+public class StringFormat {
+
+    @Test
+    public void testFormat() {
+        String format = String.format(ParamValidatorConstant.ERROR_MSG, "rule1", "name", "chengdu");
+        System.out.println(format);
+    }
 }

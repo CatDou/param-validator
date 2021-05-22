@@ -50,6 +50,12 @@ public class JsonConfigLoader implements ParamConfigLoader {
     private static final String CHECK_RULE_NAME = "validate_rule_";
 
     @Override
+    public List<UrlRuleBean> parseOneResource(Resource resource) throws IOException {
+        String paramUrlJson = readStr(resource.getFile());
+        return JSONObject.parseArray(paramUrlJson, UrlRuleBean.class);
+    }
+
+    @Override
     public ParamConfig loadParamConfig(String path) {
         try {
             return loadByPathMatchingResource(path);
@@ -61,24 +67,11 @@ public class JsonConfigLoader implements ParamConfigLoader {
     public ParamConfig loadByPathMatchingResource(String path) throws IOException {
         ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
         Resource[] resources = resourcePatternResolver.getResources(path);
-        List<Resource> resourceList = Arrays.stream(resources)
-                .filter(resource -> COMMON_NAME.equals(resource.getFilename()))
-                .collect(Collectors.toList());
-        if (resourceList.size() != 1) {
-            throw new ConfigException(COMMON_NAME + " config error");
-        }
-        String commonJson = readStr(resourceList.get(0).getFile());
+        Resource commonResource = getCommonResource(resources, COMMON_NAME);
+        String commonJson = readStr(commonResource.getFile());
         CommonConfig commonConfig = JSONObject.parseObject(commonJson, CommonConfig.class);
         LOGGER.info("load common config json success");
-        List<UrlRuleBean> allRuleBeanList = new ArrayList<>();
-        for (Resource resource : resources) {
-            String fileName = resource.getFilename();
-            if (!COMMON_NAME.equals(fileName) && StringUtils.hasText(fileName) && fileName.startsWith(CHECK_RULE_NAME)) {
-                String ruleJson = readStr(resource.getFile());
-                List<UrlRuleBean> ruleBeanList = JSONArray.parseArray(ruleJson, UrlRuleBean.class);
-                allRuleBeanList.addAll(ruleBeanList);
-            }
-        }
+        List<UrlRuleBean> allRuleBeanList = parseAllParamResource(resources, COMMON_NAME);
         LOGGER.info("load rule config json success");
         ParamConfig paramConfig = new ParamConfig();
         paramConfig.setCommonConfig(commonConfig);

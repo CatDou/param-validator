@@ -14,11 +14,27 @@
  * limitations under the License.
  */
 
-package org.catdou.validate.enums;
+package scd.ognl.enums;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author James
  */
-public enum  ValidatorType {
-    REGEXP,DEFINE,OGNL
+public enum EnumTest {
+    XML,JSON;
+
+    public static boolean contains(String name) {
+        for (EnumTest enumTest : EnumTest.values()) {
+            if (enumTest.name().equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean value(String name) {
+        return false;
+    }
 }

@@ -14,11 +14,17 @@
  * limitations under the License.
  */
 
-package org.catdou.validate.enums;
+package org.catdou.validate.exception;
 
 /**
  * @author James
  */
-public enum  ValidatorType {
-    REGEXP,DEFINE,OGNL
+public class ValidatorOgnlException extends RuntimeException {
+    public ValidatorOgnlException(String message) {
+        super(message);
+    }
+
+    public ValidatorOgnlException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

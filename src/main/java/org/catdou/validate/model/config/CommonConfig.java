@@ -28,8 +28,6 @@ public class CommonConfig {
 
     private Long maxBodySize = 10000L;
 
-    private List<UrlRuleBean> urlRuleBeans;
-
     public boolean isCheckAllUrl() {
         return checkAllUrl;
     }
@@ -52,13 +50,5 @@ public class CommonConfig {
 
     public void setMaxBodySize(Long maxBodySize) {
         this.maxBodySize = maxBodySize;
-    }
-
-    public List<UrlRuleBean> getUrlRuleBeans() {
-        return urlRuleBeans;
-    }
-
-    public void setUrlRuleBeans(List<UrlRuleBean> urlRuleBeans) {
-        this.urlRuleBeans = urlRuleBeans;
     }
 }

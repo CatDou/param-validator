@@ -17,6 +17,7 @@
 package org.catdou.validate.cache;
 
 import org.catdou.validate.enums.ValidatorType;
+import org.catdou.validate.type.OgnlValidator;
 import org.catdou.validate.type.ParamValidator;
 import org.catdou.validate.type.RegexpValidator;
 
@@ -31,6 +32,7 @@ public class ValidatorCache {
 
     public ValidatorCache() {
         add(ValidatorType.REGEXP.name(), new RegexpValidator());
+        add(ValidatorType.OGNL.name(), new OgnlValidator());
     }
 
     public void add(String type, ParamValidator paramValidator) {

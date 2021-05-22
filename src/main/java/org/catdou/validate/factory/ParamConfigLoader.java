@@ -17,11 +17,49 @@
 package org.catdou.validate.factory;
 
 
+import com.alibaba.fastjson.JSONArray;
+import org.catdou.validate.exception.ConfigException;
+import org.catdou.validate.io.FileResources;
 import org.catdou.validate.model.config.ParamConfig;
+import org.catdou.validate.model.config.UrlRuleBean;
+import org.springframework.core.io.Resource;
+import org.springframework.util.StringUtils;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author James
  */
 public interface ParamConfigLoader {
+    String CHECK_RULE_NAME = "validate_rule_";
+
+    default Resource getCommonResource(Resource[] resources, String commonName) {
+        List<Resource> resourceList = Arrays.stream(resources)
+                .filter(resource -> commonName.equals(resource.getFilename()))
+                .collect(Collectors.toList());
+        if (resourceList.size() != 1) {
+            throw new ConfigException(commonName + " config error");
+        }
+        return resourceList.get(0);
+    }
+
+    default List<UrlRuleBean> parseAllParamResource(Resource[] resources, String commonName) throws IOException {
+        List<UrlRuleBean> allUrlRuleBean = new ArrayList<>();
+        for (Resource resource : resources) {
+            String fileName = resource.getFilename();
+            if (!commonName.equals(fileName) && StringUtils.hasText(fileName) && fileName.startsWith(CHECK_RULE_NAME)) {
+                List<UrlRuleBean> ruleBeanList = parseOneResource(resource);
+                allUrlRuleBean.addAll(ruleBeanList);
+            }
+        }
+        return allUrlRuleBean;
+    }
+
+    List<UrlRuleBean> parseOneResource(Resource resource) throws IOException;
+
     ParamConfig loadParamConfig(String path);
 }

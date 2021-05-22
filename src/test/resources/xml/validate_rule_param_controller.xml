@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <urls>
-    <url name="/param/body/{key}" method = "post">
+    <item url="/param/body/{key}" method="post" maxBodySize="1000" sort="0">
         <urlParams>
             <param name="taskId" nullable="true">
                 <rules>
@@ -23,5 +23,46 @@
                 </rules>
             </param>
         </bodyParams>
-    </url>
+    </item>
+    <item url="/param/body/{key}/test" method="post" maxBodySize="100" sort="1">
+        <urlParams>
+            <param name="taskId" nullable="true">
+                <rules>
+                    <rule name="REGEXP" value="\d+{0,20}" />
+                </rules>
+            </param>
+        </urlParams>
+        <pathParams>
+            <param name="{key}">
+                <rules>
+                    <rule name="REGEXP" value="\d+{0,20}" />
+                </rules>
+            </param>
+        </pathParams>
+        <bodyParams>
+            <param name="id">
+                <rules>
+                    <rule name="REGEXP" value="\d+{0,20}" />
+                    <rule name="DEFINE" value="com.scd.mvctest.define.ParamDefineValidator" />
+                </rules>
+            </param>
+        </bodyParams>
+    </item>
+    <item url="/param/{key}/url/param" method="post" maxBodySize="100" sort="1">
+        <pathParams>
+            <param name="{key}">
+                <rules>
+                    <rule name="REGEXP" value="\d+{0,20}" />
+                </rules>
+            </param>
+        </pathParams>
+        <bodyParams>
+            <param name="id">
+                <rules>
+                    <rule name="REGEXP" value="\d+{0,20}" />
+                    <rule name="DEFINE" value="com.scd.mvctest.define.ParamDefineValidator" />
+                </rules>
+            </param>
+        </bodyParams>
+    </item>
 </urls>

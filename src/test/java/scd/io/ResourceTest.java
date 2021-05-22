@@ -19,6 +19,7 @@ package scd.io;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.catdou.validate.factory.JsonConfigLoader;
+import org.catdou.validate.io.FileResources;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.core.io.Resource;
@@ -51,9 +52,8 @@ public class ResourceTest {
     public void readJson() throws IOException {
         ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
         Resource[] resources = resourcePatternResolver.getResources("classpath*:json/**/validate_*.json");
-        JsonConfigLoader jsonConfigLoader = new JsonConfigLoader();
         for (Resource resource : resources) {
-            String json = jsonConfigLoader.readStr(resource.getFile());
+            String json = FileResources.readStr(resource.getFile());
             Assert.assertTrue(StringUtils.hasText(json));
             Object object = JSONObject.parse(json);
             if (object instanceof JSONObject) {

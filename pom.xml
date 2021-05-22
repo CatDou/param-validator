@@ -74,6 +74,13 @@
             <version>1.7.30</version>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>ognl</groupId>
+            <artifactId>ognl</artifactId>
+            <version>3.2.14</version>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <build>

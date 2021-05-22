@@ -19,6 +19,7 @@ package scd.str.json;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.catdou.validate.factory.JsonConfigLoader;
+import org.catdou.validate.io.FileResources;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.core.io.Resource;
@@ -38,8 +39,7 @@ public class JsonParseTest {
         String path = "json/validate_rule_param_controller.json";
         ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
         Resource[] resources = resourcePatternResolver.getResources(path);
-        JsonConfigLoader jsonConfigLoader = new JsonConfigLoader();
-        String ruleJson = jsonConfigLoader.readStr(resources[0].getFile());
+        String ruleJson = FileResources.readStr(resources[0].getFile());
         Object obj = JSONObject.parse(ruleJson);
         if (obj instanceof JSONArray) {
             JSONArray jsonArray = (JSONArray) obj;

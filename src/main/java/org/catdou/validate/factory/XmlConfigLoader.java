@@ -16,15 +16,73 @@
 
 package org.catdou.validate.factory;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import org.catdou.validate.exception.ConfigException;
+import org.catdou.validate.exception.ParseException;
+import org.catdou.validate.io.FileResources;
+import org.catdou.validate.log.ValidatorLog;
+import org.catdou.validate.log.ValidatorLogFactory;
+import org.catdou.validate.model.config.CommonConfig;
 import org.catdou.validate.model.config.ParamConfig;
+import org.catdou.validate.model.config.UrlRuleBean;
+import org.catdou.validate.xml.CommonXmlParser;
+import org.catdou.validate.xml.UrlParamRuleXmlParser;
+import org.catdou.validate.xml.XmlDocument;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
+import org.springframework.util.StringUtils;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author James
  */
 public class XmlConfigLoader implements ParamConfigLoader {
+    private static final ValidatorLog LOGGER = ValidatorLogFactory.getLogger(JsonConfigLoader.class);
+
+    private static final String COMMON_NAME = "validate_common_config.xml";
+
+    private static final String CHECK_RULE_NAME = "validate_rule_";
+
+    @Override
+    public List<UrlRuleBean> parseOneResource(Resource resource) throws IOException {
+        XmlDocument xmlDocument = new XmlDocument(resource.getFile());
+        UrlParamRuleXmlParser paramRuleXmlParser = new UrlParamRuleXmlParser(xmlDocument);
+        return paramRuleXmlParser.parseUrlParamRuleXml();
+    }
 
     @Override
     public ParamConfig loadParamConfig(String path) {
-        return new ParamConfig();
+        try {
+            return loadByPathMatchingResource(path);
+        } catch (IOException e) {
+            throw new ParseException("load param xml config error", e);
+        }
+    }
+
+    public ParamConfig loadByPathMatchingResource(String path) throws IOException {
+        ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
+        Resource[] resources = resourcePatternResolver.getResources(path);
+        Resource commonResource = getCommonResource(resources, COMMON_NAME);
+        CommonConfig commonConfig = parseCommon(commonResource);
+        LOGGER.info("load xml config file success");
+        List<UrlRuleBean> allRuleBeanList = parseAllParamResource(resources, COMMON_NAME);
+        LOGGER.info("load xml config file success");
+        ParamConfig paramConfig = new ParamConfig();
+        paramConfig.setCommonConfig(commonConfig);
+        paramConfig.setUrlRuleBeanList(allRuleBeanList);
+        return paramConfig;
+    }
+
+    private CommonConfig parseCommon(Resource resource) throws IOException {
+        XmlDocument xmlDocument = new XmlDocument(resource.getFile());
+        CommonXmlParser commonXmlParser = new CommonXmlParser(xmlDocument);
+        return commonXmlParser.parseCommon();
     }
 }

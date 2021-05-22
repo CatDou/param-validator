@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package org.catdou.validate.enums;
+package org.catdou.validate.constant;
 
 /**
  * @author James
  */
-public enum  ValidatorType {
-    REGEXP,DEFINE,OGNL
+public class ParamValidatorConstant {
+    public static final String ERROR_MSG = "rule name %s, param name %s, param value %s, check error";
 }

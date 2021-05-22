@@ -14,11 +14,17 @@
  * limitations under the License.
  */
 
-package org.catdou.validate.enums;
+package org.catdou.validate.handler;
 
 /**
  * @author James
  */
-public enum  ValidatorType {
-    REGEXP,DEFINE,OGNL
+public class BooleanTypeHandler implements BaseTypeHandler {
+    @Override
+    public Object convertType(String input) {
+        if (input == null) {
+            return input;
+        }
+        return Boolean.valueOf(input);
+    }
 }
