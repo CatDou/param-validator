@@ -47,6 +47,7 @@
 
     <properties>
         <spring-version>5.3.6</spring-version>
+        <jdk.version>1.8</jdk.version>
     </properties>
 
     <dependencies>
@@ -119,6 +120,11 @@
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.0</version>
+                    <configuration>
+                        <encoding>UTF-8</encoding>
+                        <source>${jdk.version}</source>
+                        <target>${jdk.version}</target>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
