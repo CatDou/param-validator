@@ -16,7 +16,7 @@
   -->
 
 <!ELEMENT common (checkAllUrl?,whiteList?,maxBodySize?)>
-<!ELEMENT checkAllUrl EMPTY>
+<!ELEMENT checkAllUrl (#PCDATA)>
 
 <!ELEMENT whiteList (url*)>
 <!ELEMENT url (#PCDATA)>
