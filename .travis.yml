@@ -1,0 +1,12 @@
+language: java
+jdk:
+  - openjdk15
+  - openjdk14
+  - openjdk13
+  - openjdk11
+  - openjdk8
+  - oraclejdk8
+before_install:
+  - pip install --user codecov
+after_success:
+  - codecov
