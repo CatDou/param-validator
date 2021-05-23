@@ -34,9 +34,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author James
  */
 public class ReflectUtil {
-    private static final Map<Class<?>, Field[]> declaredFieldsCache = new ConcurrentHashMap<>(256);
+    private static final Map<Class<?>, Field[]> DECLARED_FIELDS_CACHE = new ConcurrentHashMap<>(256);
 
-    private static final Map<Class<?>, Map<String, Field>> declareMapFieldsCache = new ConcurrentHashMap<>(256);
+    private static final Map<Class<?>, Map<String, Field>> DECLARE_MAP_FIELDS_CACHE = new ConcurrentHashMap<>(256);
 
     private static final Field[] EMPTY_FIELD_ARRAY = new Field[0];
 
@@ -79,7 +79,7 @@ public class ReflectUtil {
 
     public static Map<String, Field> findStrFieldMap(Class<?> clazz) {
         Assert.notNull(clazz, "Class must not be null");
-        Map<String, Field> stringFieldMap = declareMapFieldsCache.computeIfAbsent(clazz, k -> new HashMap<>());
+        Map<String, Field> stringFieldMap = DECLARE_MAP_FIELDS_CACHE.computeIfAbsent(clazz, k -> new HashMap<>(30));
         Class<?> searchType = clazz;
         while (Object.class != searchType && searchType != null) {
             Field[] fields = getDeclaredFields(searchType);
@@ -96,11 +96,11 @@ public class ReflectUtil {
 
     private static Field[] getDeclaredFields(Class<?> clazz) {
         Assert.notNull(clazz, "Class must not be null");
-        Field[] result = declaredFieldsCache.get(clazz);
+        Field[] result = DECLARED_FIELDS_CACHE.get(clazz);
         if (result == null) {
             try {
                 result = clazz.getDeclaredFields();
-                declaredFieldsCache.put(clazz, (result.length == 0 ? EMPTY_FIELD_ARRAY : result));
+                DECLARED_FIELDS_CACHE.put(clazz, (result.length == 0 ? EMPTY_FIELD_ARRAY : result));
             }
             catch (Throwable ex) {
                 throw new IllegalStateException("Failed to introspect Class [" + clazz.getName() +

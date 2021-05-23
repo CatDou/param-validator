@@ -47,7 +47,7 @@ public class XmlDocument {
         try {
             document = documentBuilder.parse(file);
         } catch (SAXException | IOException e) {
-            throw new ParseException("parse file " + file.getName() + " error");
+            throw new ParseException("parse file " + file.getName() + " error", e);
         }
     }
 

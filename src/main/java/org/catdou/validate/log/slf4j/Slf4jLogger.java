@@ -24,30 +24,30 @@ import org.slf4j.LoggerFactory;
  * @author James
  */
 public class Slf4jLogger implements ValidatorLog {
-    private Logger LOGGER;
+    private Logger logger;
 
     public Slf4jLogger(Class<?> clazz) {
-        LOGGER = LoggerFactory.getLogger(clazz);
+        logger = LoggerFactory.getLogger(clazz);
     }
 
 
     @Override
     public void debug(String s) {
-        LOGGER.debug(s);
+        logger.debug(s);
     }
 
     @Override
     public void warn(String s) {
-        LOGGER.warn(s);
+        logger.warn(s);
     }
 
     @Override
     public void info(String s) {
-        LOGGER.info(s);
+        logger.info(s);
     }
 
     @Override
     public void error(String s) {
-        LOGGER.error(s);
+        logger.error(s);
     }
 }

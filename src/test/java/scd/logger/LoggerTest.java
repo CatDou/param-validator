@@ -20,6 +20,8 @@ import org.catdou.validate.log.ValidatorLog;
 import org.catdou.validate.log.ValidatorLogFactory;
 import org.junit.Test;
 
+import java.util.logging.Logger;
+
 /**
  * @author James
  */
@@ -27,6 +29,13 @@ public class LoggerTest {
 
     @Test
     public void testLog() {
+        ValidatorLog validatorLog = ValidatorLogFactory.getLogger(LoggerTest.class);
+        validatorLog.info("hello ");
+    }
+
+    @Test
+    public void testSetLogger() {
+        ValidatorLogFactory.setFindClazz(Logger.class.getName());
         ValidatorLog validatorLog = ValidatorLogFactory.getLogger(LoggerTest.class);
         validatorLog.info("hello ");
     }

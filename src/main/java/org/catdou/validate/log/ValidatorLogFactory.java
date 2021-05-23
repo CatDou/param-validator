@@ -32,12 +32,12 @@ public class ValidatorLogFactory {
 
     private static String findClazz;
 
-    private static final Map<String, Constructor<? extends ValidatorLog>> logMap = new LinkedHashMap<>();
+    private static final Map<String, Constructor<? extends ValidatorLog>> LOG_MAP = new LinkedHashMap<>();
 
     static {
-        logMap.put("org.slf4j.Logger", getConstructor(Slf4jLogger.class));
-        logMap.put("java.util.logging.Logger", getConstructor(JdkLogger.class));
-        logMap.forEach((className, constructor) -> {
+        LOG_MAP.put("org.slf4j.Logger", getConstructor(Slf4jLogger.class));
+        LOG_MAP.put("java.util.logging.Logger", getConstructor(JdkLogger.class));
+        LOG_MAP.forEach((className, constructor) -> {
             if (findClazz == null) {
                 try {
                     findClazz = loadLoggerClazz(className);
@@ -47,9 +47,14 @@ public class ValidatorLogFactory {
         });
     }
 
+    public static void setFindClazz(String logClazz) {
+        loadLoggerClazz(logClazz);
+        findClazz = logClazz;
+    }
+
     public static ValidatorLog getLogger(Class<?> clazz) {
         try {
-            return logMap.get(findClazz).newInstance(clazz);
+            return LOG_MAP.get(findClazz).newInstance(clazz);
         } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
             throw new ReflectException("get logger reflect exception ", e);
         }

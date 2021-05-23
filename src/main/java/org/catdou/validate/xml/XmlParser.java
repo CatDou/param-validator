@@ -19,19 +19,11 @@ package org.catdou.validate.xml;
 import org.catdou.validate.exception.ParseException;
 import org.catdou.validate.log.ValidatorLog;
 import org.catdou.validate.log.ValidatorLogFactory;
-import org.catdou.validate.model.config.CommonConfig;
-import org.catdou.validate.model.config.UrlRuleBean;
-import org.springframework.util.Assert;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import javax.xml.namespace.QName;
 import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author James

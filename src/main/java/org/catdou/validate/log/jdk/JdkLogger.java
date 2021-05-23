@@ -25,29 +25,29 @@ import java.util.logging.Logger;
  * @author James
  */
 public class JdkLogger implements ValidatorLog {
-    private Logger LOGGER;
+    private Logger logger;
 
     public JdkLogger(Class<?> clazz) {
-        LOGGER = Logger.getLogger(clazz.getName());
+        logger = Logger.getLogger(clazz.getName());
     }
 
     @Override
     public void debug(String s) {
-        LOGGER.log(Level.FINE, s);
+        logger.log(Level.FINE, s);
     }
 
     @Override
     public void warn(String s) {
-        LOGGER.log(Level.WARNING, s);
+        logger.log(Level.WARNING, s);
     }
 
     @Override
     public void info(String s) {
-        LOGGER.log(Level.INFO, s);
+        logger.log(Level.INFO, s);
     }
 
     @Override
     public void error(String s) {
-        LOGGER.log(Level.SEVERE, s);
+        logger.log(Level.SEVERE, s);
     }
 }

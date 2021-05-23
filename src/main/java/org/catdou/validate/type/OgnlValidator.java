@@ -21,8 +21,6 @@ import ognl.OgnlException;
 import org.catdou.validate.constant.ParamValidatorConstant;
 import org.catdou.validate.exception.ConfigException;
 import org.catdou.validate.exception.ValidatorOgnlException;
-import org.catdou.validate.log.ValidatorLog;
-import org.catdou.validate.log.ValidatorLogFactory;
 import org.catdou.validate.model.InputParam;
 import org.catdou.validate.model.ValidateResult;
 import org.catdou.validate.model.config.CheckRule;
@@ -44,7 +42,7 @@ public class OgnlValidator implements ParamValidator {
     public ValidateResult validate(InputParam inputParam, CheckRule checkRule) {
         String expression = checkRule.getValue();
         Object node = getOgnlNode(expression);
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(1);
         map.put(inputParam.getName(), inputParam.getParam());
         Map context = Ognl.createDefaultContext(map, VALIDATOR_MEMBER_ACCESS);
         try {

@@ -16,6 +16,7 @@
 
 package scd.ognl;
 
+import org.catdou.validate.enums.ValidatorType;
 import org.catdou.validate.exception.ValidatorOgnlException;
 import org.catdou.validate.model.InputParam;
 import org.catdou.validate.model.config.CheckRule;
@@ -32,7 +33,7 @@ public class OgnlTest {
 
     private CheckRule createCheckRule(String ognlExpression) {
         CheckRule checkRule = new CheckRule();
-        checkRule.setName("OGNL");
+        checkRule.setName(ValidatorType.OGNL.name());
         checkRule.setValue(ognlExpression);
         return checkRule;
     }

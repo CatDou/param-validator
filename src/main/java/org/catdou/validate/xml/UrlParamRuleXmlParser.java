@@ -25,7 +25,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +59,7 @@ public class UrlParamRuleXmlParser extends XmlParser {
                     urlRuleBean.setPathParams(paramsList);
                 }
                 Object bodyParamsNodes = super.evaluate("bodyParams/param", childNode, XPathConstants.NODESET);
-                if (bodyParamsNodes != null) {
+                if (bodyParamsNodes instanceof NodeList) {
                     List<Param> paramsList = parseParamList((NodeList) bodyParamsNodes);
                     urlRuleBean.setBodyParams(paramsList);
                 }
@@ -105,7 +104,7 @@ public class UrlParamRuleXmlParser extends XmlParser {
     }
 
     private Map<String, String> parseAttributes(Node n) {
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>(16);
         NamedNodeMap attributeNodes = n.getAttributes();
         if (attributeNodes != null) {
             for (int i = 0; i < attributeNodes.getLength(); i++) {

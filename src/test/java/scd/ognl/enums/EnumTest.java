@@ -16,8 +16,6 @@
 
 package scd.ognl.enums;
 
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author James

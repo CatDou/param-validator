@@ -60,7 +60,7 @@ public class PathParamProcessor extends BaseParamProcessor {
         List<String> configItems = configUrlPath.getPaths();
         List<String> inputItems = inputPath.getPaths();
         List<Integer> indexList = configUrlPath.getIndexs();
-        Map<String, String> paramMap = new HashMap<>();
+        Map<String, String> paramMap = new HashMap<>(16);
         for (Integer index : indexList) {
             String itemKey = configItems.get(index);
             paramMap.put(itemKey, inputItems.get(index));

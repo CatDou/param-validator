@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE urls SYSTEM "validate_param_rule_config.dtd">
 <urls>
     <item url="/param/body/{key}" method="post" maxBodySize="1000" sort="0">
         <urlParams>

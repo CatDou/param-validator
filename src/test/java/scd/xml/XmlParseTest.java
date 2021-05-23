@@ -38,7 +38,7 @@ import java.util.List;
 public class XmlParseTest {
 
     @Test
-    public void testParseCommonXml() throws ParserConfigurationException, IOException, SAXException, XPathExpressionException {
+    public void testParseCommonXml() throws IOException {
         Resource[] resources = FileResources.loadResourceByPath("classpath*:xml/**/validate_common_config.xml");
         XmlDocument xmlDocument = new XmlDocument(resources[0].getFile());
         CommonXmlParser commonXmlParser = new CommonXmlParser(xmlDocument);
@@ -49,7 +49,7 @@ public class XmlParseTest {
     }
 
     @Test
-    public void testParseParamXml() throws ParserConfigurationException, IOException, SAXException, XPathExpressionException {
+    public void testParseParamXml() throws IOException {
         Resource[] resources = FileResources.loadResourceByPath("classpath*:xml/**/validate_rule_param_controller.xml");
         XmlDocument xmlDocument = new XmlDocument(resources[0].getFile());
         UrlParamRuleXmlParser paramRuleXmlParser = new UrlParamRuleXmlParser(xmlDocument);
