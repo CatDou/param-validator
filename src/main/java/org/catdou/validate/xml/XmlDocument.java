@@ -16,7 +16,10 @@
 
 package org.catdou.validate.xml;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.catdou.validate.exception.ParseException;
+import org.catdou.validate.log.ValidatorLog;
+import org.catdou.validate.log.ValidatorLogFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -32,6 +35,8 @@ import java.io.IOException;
  * @author James
  */
 public class XmlDocument {
+    private static final ValidatorLog LOG = ValidatorLogFactory.getLogger(XmlDocument.class);
+
     private Document document;
 
     private static XPath xpath;
@@ -47,6 +52,7 @@ public class XmlDocument {
         try {
             document = documentBuilder.parse(file);
         } catch (SAXException | IOException e) {
+            LOG.error("parse file " + file.getName() + " error " + ExceptionUtils.getStackTrace(e));
             throw new ParseException("parse file " + file.getName() + " error", e);
         }
     }
