@@ -5,3 +5,17 @@
 
 demo project
 [https://github.com/shootercheng/param-validator-demo](https://github.com/shootercheng/param-validator-demo)
+
+## Maven
+```xml
+<dependency>
+  <groupId>com.github.catdou</groupId>
+  <artifactId>param-validator</artifactId>
+  <version>1.0</version>
+</dependency>
+```
+
+## Gradle
+```
+implementation 'com.github.catdou:param-validator:1.0'
+```
