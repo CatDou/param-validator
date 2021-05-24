@@ -24,9 +24,9 @@ maxBodySize CDATA #IMPLIED
 sort CDATA #IMPLIED
 >
 
-<!ELEMENT urlParams (param)>
-<!ELEMENT pathParams (param)>
-<!ELEMENT bodyParams (param)>
+<!ELEMENT urlParams (param*)>
+<!ELEMENT pathParams (param*)>
+<!ELEMENT bodyParams (param*)>
 
 <!ELEMENT param (rules)>
 <!ATTLIST param

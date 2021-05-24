@@ -8,6 +8,11 @@
                     <rule name="REGEXP" value="\d+{0,20}" />
                 </rules>
             </param>
+            <param name="taskId" nullable="true">
+                <rules>
+                    <rule name="REGEXP" value="\d+{0,20}" />
+                </rules>
+            </param>
         </urlParams>
         <pathParams>
             <param name="{key}">

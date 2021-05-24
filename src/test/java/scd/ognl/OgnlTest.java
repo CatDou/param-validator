@@ -47,6 +47,14 @@ public class OgnlTest {
     }
 
     @Test
+    public void testMathJavaExpression() {
+        String expression = "a >= 1 && a <= 100";
+        CheckRule checkRule = createCheckRule(expression);
+        Assert.assertTrue(ognlValidator.validate(new InputParam("a", 50), checkRule).isSuccess());
+        Assert.assertFalse(ognlValidator.validate(new InputParam("a", 120), checkRule).isSuccess());
+    }
+
+    @Test
     public void testArgMethod() {
         String expression = "@scd.ognl.enums.EnumTest@contains(name)";
         CheckRule checkRule = createCheckRule(expression);

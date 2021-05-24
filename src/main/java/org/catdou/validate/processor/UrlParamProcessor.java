@@ -23,7 +23,6 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 
 /**
- * /url/item?name=chengdu&sex=male
  * @author James
  */
 public class UrlParamProcessor extends BaseParamProcessor {

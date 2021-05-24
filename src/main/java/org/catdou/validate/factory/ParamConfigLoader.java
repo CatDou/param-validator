@@ -17,9 +17,7 @@
 package org.catdou.validate.factory;
 
 
-import com.alibaba.fastjson.JSONArray;
 import org.catdou.validate.exception.ConfigException;
-import org.catdou.validate.io.FileResources;
 import org.catdou.validate.model.config.ParamConfig;
 import org.catdou.validate.model.config.UrlRuleBean;
 import org.springframework.core.io.Resource;
