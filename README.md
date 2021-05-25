@@ -1,6 +1,7 @@
 # param-validator
 
 [![Build Status](https://github.com/CatDou/param-validator/workflows/Java%20CI%20with%20Maven/badge.svg)](https://github.com/CatDou/param-validator/actions/workflows/maven.yml)
+[![codecov](https://codecov.io/gh/CatDou/param-validator/branch/main/graph/badge.svg)](https://codecov.io/gh/CatDou/param-validator)
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 [![Maven central](https://maven-badges.herokuapp.com/maven-central/com.github.catdou/param-validator/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.catdou/param-validator)
 

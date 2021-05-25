@@ -16,7 +16,7 @@ jobs:
     - name: Set up JDK 8
       uses: actions/setup-java@v2
       with:
-        java-version: '8'
+        java-version: '8'   # cobertura-maven-plugin 2.7, java version should be 8
         distribution: 'adopt'
     - name: generate code report
       run: mvn cobertura:cobertura
