@@ -18,6 +18,8 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
+    - name: generate code report
+      run: mvn test
     - uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
