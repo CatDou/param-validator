@@ -18,13 +18,10 @@ package scd.io;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import org.catdou.validate.exception.ConfigException;
 import org.catdou.validate.io.FileResourcesUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
