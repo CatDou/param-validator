@@ -32,10 +32,10 @@ public class PathUrlTest {
         String url = "/url/name/1";
         UrlPath configPath = HttpUtil.getUrlPath(configUrl);
         UrlPath urlPath = HttpUtil.getUrlPath(url);
-        Assert.assertTrue(configPath.getPaths().size() == 3);
-        Assert.assertTrue(configPath.getIndexs().size() == 2);
-        Assert.assertTrue(urlPath.getPaths().size() == 3);
-        Assert.assertTrue(urlPath.getIndexs().size() == 0);
+        Assert.assertEquals(3, configPath.getPaths().size());
+        Assert.assertEquals(2, configPath.getIndexs().size());
+        Assert.assertEquals(3, urlPath.getPaths().size());
+        Assert.assertEquals(0, urlPath.getIndexs().size());
         Assert.assertEquals("url", configPath.getPaths().get(0));
         Assert.assertEquals("{item}", configPath.getPaths().get(1));
         Assert.assertEquals("{key}", configPath.getPaths().get(2));

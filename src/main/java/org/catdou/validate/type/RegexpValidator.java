@@ -16,7 +16,7 @@
 
 package org.catdou.validate.type;
 
-import org.catdou.validate.constant.ParamValidatorConstant;
+import org.catdou.validate.constant.ParamValidatorConstants;
 import org.catdou.validate.model.InputParam;
 import org.catdou.validate.model.ValidateResult;
 import org.catdou.validate.model.config.CheckRule;
@@ -43,7 +43,7 @@ public class RegexpValidator implements ParamValidator {
             validateResult.setSuccess(true);
         } else {
             validateResult.setSuccess(false);
-            String msg = String.format(ParamValidatorConstant.ERROR_MSG, checkRule.getName(),
+            String msg = String.format(ParamValidatorConstants.ERROR_MSG, checkRule.getName(),
                     inputParam.getName(), inputParam.getParam());
             validateResult.setMsg(msg);
         }

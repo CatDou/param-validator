@@ -16,11 +16,7 @@
 
 package org.catdou.validate.factory;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import org.catdou.validate.exception.ConfigException;
 import org.catdou.validate.exception.ParseException;
-import org.catdou.validate.io.FileResources;
 import org.catdou.validate.log.ValidatorLog;
 import org.catdou.validate.log.ValidatorLogFactory;
 import org.catdou.validate.model.config.CommonConfig;
@@ -32,13 +28,9 @@ import org.catdou.validate.xml.XmlDocument;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
-import org.springframework.util.StringUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author James
@@ -47,8 +39,6 @@ public class XmlConfigLoader implements ParamConfigLoader {
     private static final ValidatorLog LOGGER = ValidatorLogFactory.getLogger(JsonConfigLoader.class);
 
     private static final String COMMON_NAME = "validate_common_config.xml";
-
-    private static final String CHECK_RULE_NAME = "validate_rule_";
 
     @Override
     public List<UrlRuleBean> parseOneResource(Resource resource) throws IOException {

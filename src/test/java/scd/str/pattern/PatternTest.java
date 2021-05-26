@@ -17,6 +17,7 @@
 package scd.str.pattern;
 
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.regex.Matcher;
@@ -34,7 +35,7 @@ public class PatternTest {
         String url = "/url/{item}/{key1}/{1}";
         Matcher matcher = URI_TEMPLATE_VARIABLE_PATTERN.matcher(url);
         while (matcher.find()) {
-            System.out.println(matcher.group());
+            Assert.assertNotNull(matcher.group());
         }
     }
 }

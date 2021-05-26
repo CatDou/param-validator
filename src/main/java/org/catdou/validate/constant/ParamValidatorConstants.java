@@ -19,6 +19,6 @@ package org.catdou.validate.constant;
 /**
  * @author James
  */
-public class ParamValidatorConstant {
+public class ParamValidatorConstants {
     public static final String ERROR_MSG = "rule name %s, param name %s, param value %s, check error";
 }

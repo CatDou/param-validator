@@ -16,7 +16,8 @@
 
 package scd.str;
 
-import org.catdou.validate.constant.ParamValidatorConstant;
+import org.catdou.validate.constant.ParamValidatorConstants;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -26,7 +27,7 @@ public class StringFormat {
 
     @Test
     public void testFormat() {
-        String format = String.format(ParamValidatorConstant.ERROR_MSG, "rule1", "name", "chengdu");
-        System.out.println(format);
+        String format = String.format(ParamValidatorConstants.ERROR_MSG, "rule1", "name", "chengdu");
+        Assert.assertEquals("rule name rule1, param name name, param value chengdu, check error", format);
     }
 }

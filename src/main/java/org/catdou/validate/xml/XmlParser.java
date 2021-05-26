@@ -17,8 +17,6 @@
 package org.catdou.validate.xml;
 
 import org.catdou.validate.exception.ParseException;
-import org.catdou.validate.log.ValidatorLog;
-import org.catdou.validate.log.ValidatorLogFactory;
 import org.w3c.dom.Document;
 
 import javax.xml.namespace.QName;
@@ -29,7 +27,6 @@ import javax.xml.xpath.XPathExpressionException;
  * @author James
  */
 public class XmlParser {
-    private static final ValidatorLog LOG = ValidatorLogFactory.getLogger(XmlParser.class);
 
     protected Document document;
 

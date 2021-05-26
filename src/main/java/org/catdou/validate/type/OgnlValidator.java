@@ -18,7 +18,7 @@ package org.catdou.validate.type;
 
 import ognl.Ognl;
 import ognl.OgnlException;
-import org.catdou.validate.constant.ParamValidatorConstant;
+import org.catdou.validate.constant.ParamValidatorConstants;
 import org.catdou.validate.exception.ConfigException;
 import org.catdou.validate.exception.ValidatorOgnlException;
 import org.catdou.validate.model.InputParam;
@@ -54,7 +54,7 @@ public class OgnlValidator implements ParamValidator {
             Boolean checked = (Boolean) value;
             validateResult.setSuccess(checked);
             if (!checked) {
-                String msg = String.format(ParamValidatorConstant.ERROR_MSG, checkRule.getName(),
+                String msg = String.format(ParamValidatorConstants.ERROR_MSG, checkRule.getName(),
                         inputParam.getName(), inputParam.getParam());
                 validateResult.setMsg(msg);
             }

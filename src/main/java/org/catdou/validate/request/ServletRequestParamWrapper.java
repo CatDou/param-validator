@@ -17,6 +17,8 @@
 package org.catdou.validate.request;
 
 import org.catdou.validate.exception.StreamException;
+import org.catdou.validate.log.ValidatorLog;
+import org.catdou.validate.log.ValidatorLogFactory;
 import org.catdou.validate.model.config.ParamConfig;
 
 import javax.servlet.ReadListener;
@@ -35,6 +37,8 @@ import java.nio.charset.StandardCharsets;
  * @author James
  */
 public class ServletRequestParamWrapper extends HttpServletRequestWrapper {
+    private static final ValidatorLog LOG = ValidatorLogFactory.getLogger(ServletRequestParamWrapper.class);
+
     private ParamConfig paramConfig;
 
     private byte[] bodyParam;
@@ -88,7 +92,7 @@ public class ServletRequestParamWrapper extends HttpServletRequestWrapper {
 
             @Override
             public void setReadListener(ReadListener readListener) {
-
+                LOG.info("set read listener ");
             }
 
             @Override

@@ -29,7 +29,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author James
  */
-public class FileResources {
+public class FileResourcesUtils {
 
     public static Resource[] loadResourceByPath(String path) {
         ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();

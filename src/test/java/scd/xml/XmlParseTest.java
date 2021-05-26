@@ -16,7 +16,7 @@
 
 package scd.xml;
 
-import org.catdou.validate.io.FileResources;
+import org.catdou.validate.io.FileResourcesUtils;
 import org.catdou.validate.model.config.CommonConfig;
 import org.catdou.validate.model.config.UrlRuleBean;
 import org.catdou.validate.xml.CommonXmlParser;
@@ -25,10 +25,7 @@ import org.catdou.validate.xml.XmlDocument;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.core.io.Resource;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPathExpressionException;
 import java.io.IOException;
 import java.util.List;
 
@@ -39,7 +36,7 @@ public class XmlParseTest {
 
     @Test
     public void testParseCommonXml() throws IOException {
-        Resource[] resources = FileResources.loadResourceByPath("classpath*:xml/**/validate_common_config.xml");
+        Resource[] resources = FileResourcesUtils.loadResourceByPath("classpath*:xml/**/validate_common_config.xml");
         XmlDocument xmlDocument = new XmlDocument(resources[0].getFile());
         CommonXmlParser commonXmlParser = new CommonXmlParser(xmlDocument);
         CommonConfig commonConfig = commonXmlParser.parseCommon();
@@ -50,7 +47,7 @@ public class XmlParseTest {
 
     @Test
     public void testParseParamXml() throws IOException {
-        Resource[] resources = FileResources.loadResourceByPath("classpath*:xml/**/validate_rule_param_controller.xml");
+        Resource[] resources = FileResourcesUtils.loadResourceByPath("classpath*:xml/**/validate_rule_param_controller.xml");
         XmlDocument xmlDocument = new XmlDocument(resources[0].getFile());
         UrlParamRuleXmlParser paramRuleXmlParser = new UrlParamRuleXmlParser(xmlDocument);
         List<UrlRuleBean> urlRuleBeans = paramRuleXmlParser.parseUrlParamRuleXml();
