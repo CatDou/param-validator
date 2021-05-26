@@ -16,19 +16,18 @@
 
 package org.catdou.validate.factory;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.io.FileUtils;
+import org.catdou.validate.constant.ParamValidatorConstants;
 import org.catdou.validate.exception.ConfigException;
 import org.catdou.validate.exception.ParseException;
+import org.catdou.validate.io.FileResourcesUtils;
 import org.catdou.validate.log.ValidatorLog;
 import org.catdou.validate.log.ValidatorLogFactory;
 import org.catdou.validate.model.config.CommonConfig;
 import org.catdou.validate.model.config.ParamConfig;
 import org.catdou.validate.model.config.UrlRuleBean;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.core.io.support.ResourcePatternResolver;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,10 +39,6 @@ import java.util.List;
  */
 public class JsonConfigLoader implements ParamConfigLoader {
     private static final ValidatorLog LOGGER = ValidatorLogFactory.getLogger(JsonConfigLoader.class);
-
-    private static final String COMMON_NAME = "validate_common_config.json";
-
-    private static final String CHECK_RULE_NAME = "validate_rule_";
 
     @Override
     public List<UrlRuleBean> parseOneResource(Resource resource) throws IOException {
@@ -61,13 +56,12 @@ public class JsonConfigLoader implements ParamConfigLoader {
     }
 
     public ParamConfig loadByPathMatchingResource(String path) throws IOException {
-        ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
-        Resource[] resources = resourcePatternResolver.getResources(path);
-        Resource commonResource = getCommonResource(resources, COMMON_NAME);
+        Resource[] resources = FileResourcesUtils.loadResourceByPath(path);
+        Resource commonResource = getCommonResource(resources, ParamValidatorConstants.JSON_COMMON_NAME);
         String commonJson = readStr(commonResource.getFile());
         CommonConfig commonConfig = JSONObject.parseObject(commonJson, CommonConfig.class);
         LOGGER.info("load common config json success");
-        List<UrlRuleBean> allRuleBeanList = parseAllParamResource(resources, COMMON_NAME);
+        List<UrlRuleBean> allRuleBeanList = parseAllParamResource(resources, ParamValidatorConstants.JSON_COMMON_NAME);
         LOGGER.info("load rule config json success");
         ParamConfig paramConfig = new ParamConfig();
         paramConfig.setCommonConfig(commonConfig);

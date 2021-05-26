@@ -21,4 +21,8 @@ package org.catdou.validate.constant;
  */
 public class ParamValidatorConstants {
     public static final String ERROR_MSG = "rule name %s, param name %s, param value %s, check error";
+
+    public static final String XML_COMMON_NAME = "validate_common_config.xml";
+
+    public static final String JSON_COMMON_NAME = "validate_common_config.json";
 }

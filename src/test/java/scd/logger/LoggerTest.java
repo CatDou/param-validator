@@ -18,7 +18,6 @@ package scd.logger;
 
 import org.catdou.validate.log.ValidatorLog;
 import org.catdou.validate.log.ValidatorLogFactory;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.logging.Logger;

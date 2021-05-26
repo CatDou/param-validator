@@ -18,6 +18,7 @@ package scd.io;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.catdou.validate.exception.ConfigException;
 import org.catdou.validate.io.FileResourcesUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -31,12 +32,11 @@ import java.io.IOException;
 /**
  * @author James
  */
-public class ResourceTest {
+public class FileResourceUtilsTest {
 
     @Test
-    public void resourceLoad() throws IOException {
-        ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
-        Resource[] resources = resourcePatternResolver.getResources("classpath*:json/**/validate_*.json");
+    public void resourceLoad() {
+        Resource[] resources = FileResourcesUtils.loadResourceByPath("classpath*:json/**/validate_*.json");
         boolean isFind = false;
         for(Resource resource : resources) {
             if (resource.getFilename().equals("validate_common_config.json")) {
@@ -47,10 +47,10 @@ public class ResourceTest {
         Assert.assertTrue(isFind);
     }
 
+
     @Test
     public void readJson() throws IOException {
-        ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
-        Resource[] resources = resourcePatternResolver.getResources("classpath*:json/**/validate_*.json");
+        Resource[] resources = FileResourcesUtils.loadResourceByPath("classpath*:json/**/validate_*.json");
         for (Resource resource : resources) {
             String json = FileResourcesUtils.readStr(resource.getFile());
             Assert.assertTrue(StringUtils.hasText(json));

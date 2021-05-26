@@ -16,6 +16,7 @@
 
 package org.catdou.validate.factory;
 
+import org.catdou.validate.constant.ParamValidatorConstants;
 import org.catdou.validate.exception.ParseException;
 import org.catdou.validate.log.ValidatorLog;
 import org.catdou.validate.log.ValidatorLogFactory;
@@ -38,8 +39,6 @@ import java.util.List;
 public class XmlConfigLoader implements ParamConfigLoader {
     private static final ValidatorLog LOGGER = ValidatorLogFactory.getLogger(JsonConfigLoader.class);
 
-    private static final String COMMON_NAME = "validate_common_config.xml";
-
     @Override
     public List<UrlRuleBean> parseOneResource(Resource resource) throws IOException {
         XmlDocument xmlDocument = new XmlDocument(resource.getFile());
@@ -59,18 +58,18 @@ public class XmlConfigLoader implements ParamConfigLoader {
     public ParamConfig loadByPathMatchingResource(String path) throws IOException {
         ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
         Resource[] resources = resourcePatternResolver.getResources(path);
-        Resource commonResource = getCommonResource(resources, COMMON_NAME);
+        Resource commonResource = getCommonResource(resources, ParamValidatorConstants.XML_COMMON_NAME);
         CommonConfig commonConfig = parseCommon(commonResource);
-        LOGGER.info("load xml config file success");
-        List<UrlRuleBean> allRuleBeanList = parseAllParamResource(resources, COMMON_NAME);
-        LOGGER.info("load xml config file success");
+        LOGGER.info("load xml common config file success");
+        List<UrlRuleBean> allRuleBeanList = parseAllParamResource(resources, ParamValidatorConstants.XML_COMMON_NAME);
+        LOGGER.info("load xml rule config file success");
         ParamConfig paramConfig = new ParamConfig();
         paramConfig.setCommonConfig(commonConfig);
         paramConfig.setUrlRuleBeanList(allRuleBeanList);
         return paramConfig;
     }
 
-    private CommonConfig parseCommon(Resource resource) throws IOException {
+    public CommonConfig parseCommon(Resource resource) throws IOException {
         XmlDocument xmlDocument = new XmlDocument(resource.getFile());
         CommonXmlParser commonXmlParser = new CommonXmlParser(xmlDocument);
         return commonXmlParser.parseCommon();
