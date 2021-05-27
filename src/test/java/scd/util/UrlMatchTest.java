@@ -14,26 +14,24 @@
  * limitations under the License.
  */
 
-package scd.parse;
+package scd.util;
 
-import org.catdou.validate.factory.JsonConfigLoader;
-import org.catdou.validate.model.config.ParamConfig;
+import org.catdou.validate.util.UrlMatchHelper;
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.util.AntPathMatcher;
+
 
 /**
  * @author James
  */
-public class JsonLoaderTest {
+public class UrlMatchTest {
 
     @Test
-    public void testParse() {
-        JsonConfigLoader jsonConfigLoader = new JsonConfigLoader();
-        ParamConfig paramConfig = jsonConfigLoader.loadParamConfig("classpath*:json/**/validate_*.json");
-        Assert.assertNotNull(paramConfig);
-        Assert.assertNotNull(paramConfig.getCommonConfig());
-        Assert.assertNotNull(paramConfig.getUrlRuleBeanList());
-        paramConfig.init();
-        Assert.assertTrue(paramConfig.getMethodUrlMap().size() > 0);
+    public void testMatch() {
+        Assert.assertTrue(UrlMatchHelper.isMatch("/param/body/{key}", "/param/body/1"));
+        Assert.assertTrue(UrlMatchHelper.isMatch("/param/body/{data}", "/param/body/1"));
+        Assert.assertFalse(UrlMatchHelper.isMatch("/param/body/{data}/1", "/param/body/1"));
+        Assert.assertTrue(UrlMatchHelper.isMatch("/**/*.html", "/aaaa/bbb/cccc.html"));
     }
 }

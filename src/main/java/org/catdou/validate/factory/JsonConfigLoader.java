@@ -42,7 +42,7 @@ public class JsonConfigLoader implements ParamConfigLoader {
 
     @Override
     public List<UrlRuleBean> parseOneResource(Resource resource) throws IOException {
-        String paramUrlJson = readStr(resource.getFile());
+        String paramUrlJson = FileResourcesUtils.readStr(resource.getFile());
         return JSONObject.parseArray(paramUrlJson, UrlRuleBean.class);
     }
 
@@ -58,7 +58,7 @@ public class JsonConfigLoader implements ParamConfigLoader {
     public ParamConfig loadByPathMatchingResource(String path) throws IOException {
         Resource[] resources = FileResourcesUtils.loadResourceByPath(path);
         Resource commonResource = getCommonResource(resources, ParamValidatorConstants.JSON_COMMON_NAME);
-        String commonJson = readStr(commonResource.getFile());
+        String commonJson = FileResourcesUtils.readStr(commonResource.getFile());
         CommonConfig commonConfig = JSONObject.parseObject(commonJson, CommonConfig.class);
         LOGGER.info("load common config json success");
         List<UrlRuleBean> allRuleBeanList = parseAllParamResource(resources, ParamValidatorConstants.JSON_COMMON_NAME);
@@ -69,11 +69,4 @@ public class JsonConfigLoader implements ParamConfigLoader {
         return paramConfig;
     }
 
-    public String readStr(File commonFile) {
-        try {
-            return FileUtils.readFileToString(commonFile, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            throw new ConfigException("read json str error ", e);
-        }
-    }
 }
