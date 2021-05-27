@@ -57,18 +57,18 @@ public class ReflectUtil {
         }
     }
 
-    public static <T> T convertMapToObject(Map<String, String> map, Class<T> clazz) {
+    public static <T> T convertMapToObject(Map<String, Object> map, Class<T> clazz) {
         try {
             T t = clazz.newInstance();
             Map<String, Field> stringFieldMap = findStrFieldMap(clazz);
-            Set<Map.Entry<String, String>> entrySet = map.entrySet();
-            for (Map.Entry<String, String> entry : entrySet) {
+            Set<Map.Entry<String, Object>> entrySet = map.entrySet();
+            for (Map.Entry<String, Object> entry : entrySet) {
                 String filedName = entry.getKey();
                 Field field = stringFieldMap.get(filedName);
-                if (field != null && !Modifier.isFinal(field.getModifiers())) {
+                if (field != null && entry.getValue() != null && !Modifier.isFinal(field.getModifiers())) {
                     field.setAccessible(true);
                     BaseTypeHandler baseTypeHandler = HandlerMapper.getTypeHandler(field.getType());
-                    field.set(t, baseTypeHandler.convertType(entry.getValue()));
+                    field.set(t, baseTypeHandler.convertType(entry.getValue().toString()));
                 }
             }
             return t;
@@ -84,7 +84,6 @@ public class ReflectUtil {
         while (Object.class != searchType && searchType != null) {
             Field[] fields = getDeclaredFields(searchType);
             for (Field field : fields) {
-                field.setAccessible(true);
                 if (!stringFieldMap.containsKey(field.getName())) {
                     stringFieldMap.put(field.getName(), field);
                 }

@@ -17,7 +17,7 @@
 package scd.factory.loader;
 
 import org.catdou.validate.constant.ParamValidatorConstants;
-import org.catdou.validate.factory.XmlConfigLoader;
+import org.catdou.validate.factory.JsonConfigLoader;
 import org.catdou.validate.io.FileResourcesUtils;
 import org.catdou.validate.model.config.CommonConfig;
 import org.catdou.validate.model.config.ParamConfig;
@@ -32,32 +32,20 @@ import java.util.List;
 /**
  * @author James
  */
-public class XmlConfigLoaderTest {
-    private XmlConfigLoader xmlConfigLoader = new XmlConfigLoader();
+public class JsonConfigLoaderTest  {
+    private JsonConfigLoader jsonConfigLoader = new JsonConfigLoader();
 
     @Test
     public void testParseCommon() throws IOException {
         Resource[] xmlResource = FileResourcesUtils.loadResourceByPath("classpath*:xml/**/validate_*.xml");
-        Resource commonResource = xmlConfigLoader.getCommonResource(xmlResource, ParamValidatorConstants.XML_COMMON_NAME);
-        CommonConfig commonConfig = xmlConfigLoader.parseCommon(commonResource);
-        Assert.assertFalse(commonConfig.isCheckAllUrl());
-        Assert.assertEquals(3, commonConfig.getWhiteList().size());
-        Assert.assertEquals(100000, commonConfig.getMaxBodySize().intValue());
+        Resource commonResource = jsonConfigLoader.getCommonResource(xmlResource, ParamValidatorConstants.XML_COMMON_NAME);
+        Assert.assertNotNull(commonResource);
+
     }
 
     @Test
-    public void testParseRuleFile() throws IOException {
-        Resource[] xmlResource = FileResourcesUtils.loadResourceByPath("classpath*:xml/**/validate_*.xml");
-        List<UrlRuleBean> urlRuleBeanList = xmlConfigLoader.parseAllParamResource(xmlResource,
-                ParamValidatorConstants.CHECK_RULE_NAME);
-        Assert.assertTrue(urlRuleBeanList.size() > 0);
-        Assert.assertNotNull(urlRuleBeanList.get(0).getUrl());
-        Assert.assertNotNull(urlRuleBeanList.get(0).getMethod());
-    }
-
-    @Test
-    public void loadParamConfig() {
-        ParamConfig paramConfig = xmlConfigLoader.loadParamConfig("classpath*:xml/**/validate_*.xml");
+    public void testParseParamConfig() throws IOException {
+        ParamConfig paramConfig = jsonConfigLoader.loadParamConfig("classpath*:json/**/validate_*.json");
         Assert.assertNotNull(paramConfig);
         Assert.assertNotNull(paramConfig.getCommonConfig());
         CommonConfig commonConfig = paramConfig.getCommonConfig();

@@ -14,24 +14,19 @@
  * limitations under the License.
  */
 
-package scd.mvctest;
+package scd.util.define;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.springframework.util.AntPathMatcher;
-
+import org.catdou.validate.model.InputParam;
+import org.catdou.validate.model.ValidateResult;
+import org.catdou.validate.model.config.CheckRule;
+import org.catdou.validate.type.ParamValidator;
 
 /**
  * @author James
  */
-public class AntMatchTest {
-
-    @Test
-    public void testMatch() {
-        AntPathMatcher antPathMatcher = new AntPathMatcher();
-        Assert.assertTrue(antPathMatcher.match("/param/body/{key}", "/param/body/1"));
-        Assert.assertTrue(antPathMatcher.match("/param/body/{data}", "/param/body/1"));
-        Assert.assertFalse(antPathMatcher.match("/param/body/{data}/1", "/param/body/1"));
-        Assert.assertTrue(antPathMatcher.match("/**/*.html", "/aaaa/bbb/cccc.html"));
+public class DefineParamValidator implements ParamValidator {
+    @Override
+    public ValidateResult validate(InputParam inputParam, CheckRule checkRule) {
+        return null;
     }
 }

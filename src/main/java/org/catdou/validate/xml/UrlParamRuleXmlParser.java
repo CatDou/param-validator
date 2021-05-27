@@ -46,7 +46,7 @@ public class UrlParamRuleXmlParser extends XmlParser {
         for (int i = 0; i < lenu; i++) {
             Node childNode = urlNodes.item(i);
             if (childNode.getNodeType() == Node.ELEMENT_NODE) {
-                Map<String, String> nodeAttributes = parseAttributes(childNode);
+                Map<String, Object> nodeAttributes = parseAttributes(childNode);
                 UrlRuleBean urlRuleBean = ReflectUtil.convertMapToObject(nodeAttributes, UrlRuleBean.class);
                 Object urlParamNodes = super.evaluate("urlParams/param", childNode, XPathConstants.NODESET);
                 if (urlParamNodes instanceof NodeList) {
@@ -75,7 +75,7 @@ public class UrlParamRuleXmlParser extends XmlParser {
         for (int i = 0; i < lenn; i++) {
             Node node = nodeList.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
-                Map<String, String> nodeAttributes = parseAttributes(node);
+                Map<String, Object> nodeAttributes = parseAttributes(node);
                 Param param = ReflectUtil.convertMapToObject(nodeAttributes, Param.class);
                 Object object = super.evaluate("rules/rule", node, XPathConstants.NODESET);
                 if (object instanceof NodeList) {
@@ -95,7 +95,7 @@ public class UrlParamRuleXmlParser extends XmlParser {
         for (int i = 0; i < lenn; i++) {
             Node node = nodeList.item(i);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
-                Map<String, String> nodeAttributes = parseAttributes(node);
+                Map<String, Object> nodeAttributes = parseAttributes(node);
                 CheckRule checkRule = ReflectUtil.convertMapToObject(nodeAttributes, CheckRule.class);
                 checkRuleList.add(checkRule);
             }
@@ -103,8 +103,8 @@ public class UrlParamRuleXmlParser extends XmlParser {
         return checkRuleList;
     }
 
-    private Map<String, String> parseAttributes(Node n) {
-        Map<String, String> map = new HashMap<>(16);
+    private Map<String, Object> parseAttributes(Node n) {
+        Map<String, Object> map = new HashMap<>(16);
         NamedNodeMap attributeNodes = n.getAttributes();
         if (attributeNodes != null) {
             for (int i = 0; i < attributeNodes.getLength(); i++) {

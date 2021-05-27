@@ -26,32 +26,4 @@ import org.junit.Test;
  */
 public class PathUrlTest {
 
-    @Test
-    public void testPathUrl() {
-        String configUrl = "/url/{item}/{key}";
-        String url = "/url/name/1";
-        UrlPath configPath = HttpUtil.getUrlPath(configUrl);
-        UrlPath urlPath = HttpUtil.getUrlPath(url);
-        Assert.assertEquals(3, configPath.getPaths().size());
-        Assert.assertEquals(2, configPath.getIndexs().size());
-        Assert.assertEquals(3, urlPath.getPaths().size());
-        Assert.assertEquals(0, urlPath.getIndexs().size());
-        Assert.assertEquals("url", configPath.getPaths().get(0));
-        Assert.assertEquals("{item}", configPath.getPaths().get(1));
-        Assert.assertEquals("{key}", configPath.getPaths().get(2));
-        Assert.assertEquals("url", urlPath.getPaths().get(0));
-        Assert.assertEquals("name", urlPath.getPaths().get(1));
-        Assert.assertEquals("1", urlPath.getPaths().get(2));
-    }
-
-    @Test
-    public void testPathUrlTowSlash() {
-        String configUrl = "//url/{item}//{key}";
-        UrlPath configPath = HttpUtil.getUrlPath(configUrl);
-        Assert.assertTrue(configPath.getPaths().size() == 3);
-        Assert.assertTrue(configPath.getIndexs().size() == 2);
-        Assert.assertEquals("url", configPath.getPaths().get(0));
-        Assert.assertEquals("{item}", configPath.getPaths().get(1));
-        Assert.assertEquals("{key}", configPath.getPaths().get(2));
-    }
 }

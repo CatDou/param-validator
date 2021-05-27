@@ -52,6 +52,10 @@ public class HttpUtil {
     }
 
     public static UrlPath getUrlPath(String url) {
+        // if not start with url slash
+        if (url.charAt(0) != URL_SLASH) {
+            url = URL_SLASH + url;
+        }
         char[] urlArr = url.toCharArray();
         int lenu = urlArr.length;
         int moveIndex = 0;
@@ -62,7 +66,7 @@ public class HttpUtil {
             if (urlArr[temp] == ParamValidatorConstants.URL_SLASH) {
                 next = findNext(temp + 1, urlArr, lenu);
             }
-            if (temp+1 == next) {
+            if (temp + 1 == next) {
                 LOGGER.debug("find two slash //");
             } else {
                 String pathItem;
@@ -75,6 +79,10 @@ public class HttpUtil {
                 if (pathItem.startsWith(PATH_LEFT) && pathItem.endsWith(PATH_RIGHT)) {
                     urlPath.getIndexs().add(urlPath.getPaths().size() - 1);
                 }
+            }
+            // the end slash
+            if (next == lenu - 1) {
+                break;
             }
             moveIndex = next;
         }

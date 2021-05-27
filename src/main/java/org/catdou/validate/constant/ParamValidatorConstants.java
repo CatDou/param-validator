@@ -31,4 +31,6 @@ public class ParamValidatorConstants {
     public static final String PATH_LEFT = "{";
 
     public static final String PATH_RIGHT = "}";
+
+    public static final String CHECK_RULE_NAME = "validate_rule_";
 }

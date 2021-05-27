@@ -29,11 +29,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.catdou.validate.constant.ParamValidatorConstants.CHECK_RULE_NAME;
+
 /**
  * @author James
  */
 public interface ParamConfigLoader {
-    String CHECK_RULE_NAME = "validate_rule_";
 
     default Resource getCommonResource(Resource[] resources, String commonName) {
         List<Resource> resourceList = Arrays.stream(resources)
