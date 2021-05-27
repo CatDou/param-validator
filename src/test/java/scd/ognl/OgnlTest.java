@@ -55,6 +55,22 @@ public class OgnlTest {
     }
 
     @Test
+    public void testMathJavaDoubleExpression() {
+        String expression = "a >= 1.0 && a <= 5.0";
+        CheckRule checkRule = createCheckRule(expression);
+        Assert.assertTrue(ognlValidator.validate(new InputParam("a", 5.0), checkRule).isSuccess());
+        Assert.assertFalse(ognlValidator.validate(new InputParam("a", 5.1), checkRule).isSuccess());
+    }
+
+    @Test
+    public void testPathOgnlExpression() {
+        String expression = "key >= 1";
+        CheckRule checkRule = createCheckRule(expression);
+        Assert.assertTrue(ognlValidator.validate(new InputParam("{key}", 5), checkRule).isSuccess());
+        Assert.assertFalse(ognlValidator.validate(new InputParam("{key}", 0), checkRule).isSuccess());
+    }
+
+    @Test
     public void testArgMethod() {
         String expression = "@scd.ognl.enums.EnumTest@contains(name)";
         CheckRule checkRule = createCheckRule(expression);

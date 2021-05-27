@@ -18,6 +18,7 @@ package org.catdou.validate.util;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.catdou.validate.constant.ParamValidatorConstants;
 import org.catdou.validate.log.ValidatorLog;
 import org.catdou.validate.log.ValidatorLogFactory;
 import org.catdou.validate.model.url.UrlPath;
@@ -26,17 +27,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import static org.catdou.validate.constant.ParamValidatorConstants.PATH_LEFT;
+import static org.catdou.validate.constant.ParamValidatorConstants.PATH_RIGHT;
+import static org.catdou.validate.constant.ParamValidatorConstants.URL_SLASH;
+
 /**
  * @author James
  */
 public class HttpUtil {
     private static final ValidatorLog LOGGER = ValidatorLogFactory.getLogger(HttpUtil.class);
-
-    private static final char URL_SLASH = '/';
-
-    private static final String PATH_LEFT = "{";
-
-    private static final String PATH_RIGHT = "}";
 
     public static void printInfo(HttpServletResponse httpResponse, String str) {
         httpResponse.setCharacterEncoding("UTF-8");
@@ -60,7 +59,7 @@ public class HttpUtil {
         while (moveIndex < lenu && moveIndex != -1) {
             int temp = moveIndex;
             int next = -1;
-            if (urlArr[temp] == URL_SLASH) {
+            if (urlArr[temp] == ParamValidatorConstants.URL_SLASH) {
                 next = findNext(temp + 1, urlArr, lenu);
             }
             if (temp+1 == next) {
