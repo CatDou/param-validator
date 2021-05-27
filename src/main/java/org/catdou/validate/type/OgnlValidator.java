@@ -30,6 +30,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static org.catdou.validate.constant.ParamValidatorConstants.PATH_LEFT;
+import static org.catdou.validate.constant.ParamValidatorConstants.PATH_RIGHT;
+
 /**
  * @author James
  */
@@ -43,7 +46,8 @@ public class OgnlValidator implements ParamValidator {
         String expression = checkRule.getValue();
         Object node = getOgnlNode(expression);
         Map<String, Object> map = new HashMap<>(1);
-        map.put(inputParam.getName(), inputParam.getParam());
+        String configName = getConfigName(inputParam);
+        map.put(configName, inputParam.getParam());
         Map context = Ognl.createDefaultContext(map, VALIDATOR_MEMBER_ACCESS);
         try {
             Object value = Ognl.getValue(node, context, map);
@@ -62,6 +66,14 @@ public class OgnlValidator implements ParamValidator {
         } catch (OgnlException e) {
             throw new ValidatorOgnlException("ognl get value error", e);
         }
+    }
+
+    private String getConfigName(InputParam inputParam) {
+        String configName = inputParam.getName();
+        if (configName.startsWith(PATH_LEFT) && configName.endsWith(PATH_RIGHT)) {
+            configName = configName.substring(1, configName.length() - 1);
+        }
+        return configName;
     }
 
     private Object getOgnlNode(String expression) {

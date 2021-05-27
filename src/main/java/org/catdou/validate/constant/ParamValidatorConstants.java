@@ -25,4 +25,10 @@ public class ParamValidatorConstants {
     public static final String XML_COMMON_NAME = "validate_common_config.xml";
 
     public static final String JSON_COMMON_NAME = "validate_common_config.json";
+
+    public static final char URL_SLASH = '/';
+
+    public static final String PATH_LEFT = "{";
+
+    public static final String PATH_RIGHT = "}";
 }
