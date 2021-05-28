@@ -17,9 +17,7 @@
 package org.catdou.validate.factory;
 
 import com.alibaba.fastjson.JSONObject;
-import org.apache.commons.io.FileUtils;
 import org.catdou.validate.constant.ParamValidatorConstants;
-import org.catdou.validate.exception.ConfigException;
 import org.catdou.validate.exception.ParseException;
 import org.catdou.validate.io.FileResourcesUtils;
 import org.catdou.validate.log.ValidatorLog;
@@ -29,9 +27,7 @@ import org.catdou.validate.model.config.ParamConfig;
 import org.catdou.validate.model.config.UrlRuleBean;
 import org.springframework.core.io.Resource;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**

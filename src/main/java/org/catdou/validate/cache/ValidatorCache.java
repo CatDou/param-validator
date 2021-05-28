@@ -28,7 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author James
  */
 public class ValidatorCache {
-    private Map<String, ParamValidator> paramValidatorMap = new ConcurrentHashMap<>();
+    private Map<String, ParamValidator> paramValidatorMap = new ConcurrentHashMap<>(256);
 
     public ValidatorCache() {
         add(ValidatorType.REGEXP.name(), new RegexpValidator());

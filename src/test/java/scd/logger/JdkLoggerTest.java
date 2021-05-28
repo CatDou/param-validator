@@ -14,23 +14,28 @@
  * limitations under the License.
  */
 
-package scd.util;
+package scd.logger;
 
-import org.catdou.validate.util.UrlMatchHelper;
-import org.junit.Assert;
+import org.catdou.validate.log.jdk.JdkLogger;
+import org.junit.Before;
 import org.junit.Test;
-
 
 /**
  * @author James
  */
-public class UrlMatchTest {
+public class JdkLoggerTest {
+    private JdkLogger jdkLogger;
+
+    @Before
+    public void before() {
+        jdkLogger = new JdkLogger(JdkLoggerTest.class);
+    }
 
     @Test
-    public void testMatch() {
-        Assert.assertTrue(UrlMatchHelper.isMatch("/param/body/{key}", "/param/body/1"));
-        Assert.assertTrue(UrlMatchHelper.isMatch("/param/body/{data}", "/param/body/1"));
-        Assert.assertFalse(UrlMatchHelper.isMatch("/param/body/{data}/1", "/param/body/1"));
-        Assert.assertTrue(UrlMatchHelper.isMatch("/**/*.html", "/aaaa/bbb/cccc.html"));
+    public void testLog() {
+        jdkLogger.debug("hello ");
+        jdkLogger.warn("hello ");
+        jdkLogger.info("hello ");
+        jdkLogger.error("hello ");
     }
 }

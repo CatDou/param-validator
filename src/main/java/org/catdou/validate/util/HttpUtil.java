@@ -18,7 +18,6 @@ package org.catdou.validate.util;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.catdou.validate.constant.ParamValidatorConstants;
 import org.catdou.validate.log.ValidatorLog;
 import org.catdou.validate.log.ValidatorLogFactory;
 import org.catdou.validate.model.url.UrlPath;
@@ -61,19 +60,18 @@ public class HttpUtil {
         int moveIndex = 0;
         UrlPath urlPath = new UrlPath();
         while (moveIndex < lenu && moveIndex != -1) {
-            int temp = moveIndex;
             int next = -1;
-            if (urlArr[temp] == ParamValidatorConstants.URL_SLASH) {
-                next = findNext(temp + 1, urlArr, lenu);
+            if (urlArr[moveIndex] == URL_SLASH) {
+                next = findNext(moveIndex + 1, urlArr, lenu);
             }
-            if (temp + 1 == next) {
+            if (moveIndex + 1 == next) {
                 LOGGER.debug("find two slash //");
             } else {
                 String pathItem;
                 if (next != -1) {
-                    pathItem = url.substring(temp + 1, next);
+                    pathItem = url.substring(moveIndex + 1, next);
                 } else {
-                    pathItem = url.substring(temp + 1);
+                    pathItem = url.substring(moveIndex + 1);
                 }
                 urlPath.getPaths().add(pathItem);
                 if (pathItem.startsWith(PATH_LEFT) && pathItem.endsWith(PATH_RIGHT)) {

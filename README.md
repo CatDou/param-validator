@@ -7,8 +7,11 @@
 [![License](https://img.shields.io/badge/license-Apache%202-4EB1BA.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 [![Maven central](https://maven-badges.herokuapp.com/maven-central/com.github.catdou/param-validator/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.catdou/param-validator)
 
-demo project
+## demo project
+### SpringBoot
 [https://github.com/shootercheng/param-validator-demo](https://github.com/shootercheng/param-validator-demo)
+### web.xml
+[https://github.com/shootercheng/ssm_shiro_blog](https://github.com/shootercheng/ssm_shiro_blog)
 
 ## Maven
 ```xml
