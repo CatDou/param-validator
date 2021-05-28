@@ -14,16 +14,24 @@
  * limitations under the License.
  */
 
-package scd.str.pattern;
+package scd.cache;
 
-import org.catdou.validate.model.url.UrlPath;
-import org.catdou.validate.util.HttpUtil;
+import org.catdou.validate.cache.ValidatorCache;
 import org.junit.Assert;
 import org.junit.Test;
+import scd.util.define.DefineParamValidator;
 
 /**
  * @author James
  */
-public class PathUrlTest {
+public class ValidatorCacheTest {
+    private ValidatorCache validatorCache = new ValidatorCache();
 
+    @Test
+    public void testAdd() {
+        validatorCache.add(DefineParamValidator.class.getName(), new DefineParamValidator());
+        Assert.assertTrue(validatorCache.getParamValidatorMap().size() > 0);
+        Object defineParamValidator = validatorCache.getParamValidatorMap().get(DefineParamValidator.class.getName());
+        Assert.assertTrue(defineParamValidator instanceof DefineParamValidator);
+    }
 }

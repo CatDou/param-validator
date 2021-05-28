@@ -14,23 +14,29 @@
  * limitations under the License.
  */
 
-package scd.util;
+package scd.logger;
 
-import org.catdou.validate.util.UrlMatchHelper;
-import org.junit.Assert;
+import org.catdou.validate.log.ValidatorLogFactory;
+import org.catdou.validate.log.slf4j.Slf4jLogger;
+import org.junit.Before;
 import org.junit.Test;
-
 
 /**
  * @author James
  */
-public class UrlMatchTest {
+public class Slf4jLoggerTest {
+    private Slf4jLogger slf4jLogger;
+
+    @Before
+    public void before() {
+        slf4jLogger = new Slf4jLogger(Slf4jLoggerTest.class);
+    }
 
     @Test
-    public void testMatch() {
-        Assert.assertTrue(UrlMatchHelper.isMatch("/param/body/{key}", "/param/body/1"));
-        Assert.assertTrue(UrlMatchHelper.isMatch("/param/body/{data}", "/param/body/1"));
-        Assert.assertFalse(UrlMatchHelper.isMatch("/param/body/{data}/1", "/param/body/1"));
-        Assert.assertTrue(UrlMatchHelper.isMatch("/**/*.html", "/aaaa/bbb/cccc.html"));
+    public void testLog() {
+        slf4jLogger.debug("hello ");
+        slf4jLogger.warn("hello ");
+        slf4jLogger.info("hello ");
+        slf4jLogger.error("hello ");
     }
 }
