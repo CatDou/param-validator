@@ -16,7 +16,6 @@
 
 package scd.logger;
 
-import org.catdou.validate.log.ValidatorLogFactory;
 import org.catdou.validate.log.slf4j.Slf4jLogger;
 import org.junit.Before;
 import org.junit.Test;

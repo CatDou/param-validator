@@ -16,7 +16,6 @@
 
 package scd.http;
 
-import org.apache.catalina.core.ApplicationFilterChain;
 import org.catdou.validate.log.ValidatorLog;
 import org.catdou.validate.log.ValidatorLogFactory;
 

@@ -16,8 +16,6 @@
 
 package scd.processor;
 
-import org.apache.catalina.Globals;
-import org.apache.catalina.core.ApplicationFilterChain;
 import org.catdou.validate.constant.ParamValidatorConstants;
 import org.catdou.validate.processor.ValidateProcessor;
 import org.catdou.validate.request.ServletRequestParamWrapper;
