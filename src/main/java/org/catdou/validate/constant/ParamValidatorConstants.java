@@ -33,4 +33,8 @@ public class ParamValidatorConstants {
     public static final String PATH_RIGHT = "}";
 
     public static final String CHECK_RULE_NAME = "validate_rule_";
+
+    public static final String JSON_CONTENT_TYPE = "application/json";
+
+    public static final String CONTENT_TYPE_KEY = "Content-Type";
 }

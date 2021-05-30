@@ -41,7 +41,7 @@ public class ValidatorMemberAccess implements MemberAccess {
     @Override
     public void restore(Map context, Object target, Member member, String propertyName, Object state) {
         if (state != null) {
-            ((AccessibleObject) member).setAccessible(((Boolean) state).booleanValue());
+            ((AccessibleObject) member).setAccessible((boolean) state);
         }
     }
 

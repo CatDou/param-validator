@@ -8,11 +8,6 @@
                     <rule name="REGEXP" value="\d+{0,20}" />
                 </rules>
             </param>
-            <param name="taskId" nullable="true">
-                <rules>
-                    <rule name="REGEXP" value="\d+{0,20}" />
-                </rules>
-            </param>
         </urlParams>
         <pathParams>
             <param name="{key}">
@@ -25,7 +20,7 @@
             <param name="id">
                 <rules>
                     <rule name="REGEXP" value="\d+{0,20}" />
-                    <rule name="DEFINE" value="com.scd.util.define.ParamDefineValidator" />
+                    <rule name="DEFINE" value="scd.util.define.DefineParamValidator" />
                 </rules>
             </param>
         </bodyParams>

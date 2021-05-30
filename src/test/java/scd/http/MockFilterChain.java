@@ -14,21 +14,25 @@
  * limitations under the License.
  */
 
-package scd.util.define;
+package scd.http;
 
-import org.catdou.validate.model.InputParam;
-import org.catdou.validate.model.ValidateResult;
-import org.catdou.validate.model.config.CheckRule;
-import org.catdou.validate.type.ParamValidator;
+import org.catdou.validate.log.ValidatorLog;
+import org.catdou.validate.log.ValidatorLogFactory;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import java.io.IOException;
 
 /**
  * @author James
  */
-public class DefineParamValidator implements ParamValidator {
+public class MockFilterChain implements FilterChain {
+    private static final ValidatorLog LOG = ValidatorLogFactory.getLogger(MockFilterChain.class);
+
     @Override
-    public ValidateResult validate(InputParam inputParam, CheckRule checkRule) {
-        ValidateResult result = new ValidateResult();
-        result.setSuccess(true);
-        return result;
+    public void doFilter(ServletRequest request, ServletResponse response) throws IOException, ServletException {
+        LOG.info("success");
     }
 }
