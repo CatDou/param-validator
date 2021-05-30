@@ -18,11 +18,11 @@
 <dependency>
   <groupId>com.github.catdou</groupId>
   <artifactId>param-validator</artifactId>
-  <version>1.0</version>
+  <version>1.2</version>
 </dependency>
 ```
 
 ## Gradle
 ```text
-implementation 'com.github.catdou:param-validator:1.0'
+implementation 'com.github.catdou:param-validator:1.2'
 ```
