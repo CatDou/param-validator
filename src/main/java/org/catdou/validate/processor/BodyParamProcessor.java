@@ -50,9 +50,7 @@ public class BodyParamProcessor extends BaseParamProcessor {
         String bodyStr = httpServletRequest.getBodyParamStr();
         Object object = JSONObject.parse(bodyStr);
         if (object instanceof JSONObject) {
-            if (!checkJsonData(paramList, (JSONObject) object)) {
-                return false;
-            }
+            return checkJsonData(paramList, (JSONObject) object);
         } else if (object instanceof JSONArray) {
             JSONArray jsonArray = (JSONArray) object;
             int size = jsonArray.size();

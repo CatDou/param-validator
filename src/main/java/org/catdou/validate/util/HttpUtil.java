@@ -18,10 +18,12 @@ package org.catdou.validate.util;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.catdou.validate.constant.ParamValidatorConstants;
 import org.catdou.validate.log.ValidatorLog;
 import org.catdou.validate.log.ValidatorLogFactory;
 import org.catdou.validate.model.url.UrlPath;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -94,5 +96,10 @@ public class HttpUtil {
             }
         }
         return -1;
+    }
+
+    public static boolean isJsonBody(HttpServletRequest httpServletRequest) {
+        String contentType = httpServletRequest.getHeader(ParamValidatorConstants.CONTENT_TYPE_KEY);
+        return ParamValidatorConstants.JSON_CONTENT_TYPE.equalsIgnoreCase(contentType);
     }
 }

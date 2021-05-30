@@ -27,6 +27,8 @@ import org.catdou.validate.type.ParamValidator;
 public class DefineParamValidator implements ParamValidator {
     @Override
     public ValidateResult validate(InputParam inputParam, CheckRule checkRule) {
-        return null;
+        ValidateResult result = new ValidateResult();
+        result.setSuccess(true);
+        return result;
     }
 }

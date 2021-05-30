@@ -20,6 +20,7 @@ import org.catdou.validate.exception.StreamException;
 import org.catdou.validate.log.ValidatorLog;
 import org.catdou.validate.log.ValidatorLogFactory;
 import org.catdou.validate.model.config.ParamConfig;
+import org.catdou.validate.util.HttpUtil;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
@@ -48,7 +49,9 @@ public class ServletRequestParamWrapper extends HttpServletRequestWrapper {
     public ServletRequestParamWrapper(HttpServletRequest request, ParamConfig paramConfig) {
         super(request);
         this.paramConfig = paramConfig;
-        bodyParam = readRequest(request);
+        if (HttpUtil.isJsonBody(request)) {
+            bodyParam = readRequest(request);
+        }
     }
 
     private byte[] readRequest(HttpServletRequest request) {
@@ -61,13 +64,13 @@ public class ServletRequestParamWrapper extends HttpServletRequestWrapper {
             while ((readLen = inputStream.read(buffer)) != -1) {
                 bodySize = bodySize + readLen;
                 if (bodySize > maxBody) {
-                    throw new IllegalArgumentException("the request body size is larger than the configuration value");
+                    throw new IllegalArgumentException("the http body size is larger than the configuration value");
                 }
                 outputStream.write(buffer, 0, readLen);
             }
             return outputStream.toByteArray();
         } catch (IOException e) {
-            throw new StreamException("read request body error ", e);
+            throw new StreamException("read http body error ", e);
         }
     }
 
