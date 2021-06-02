@@ -16,6 +16,7 @@
 
 package scd.processor;
 
+import org.apache.commons.io.FileUtils;
 import org.catdou.validate.constant.ParamValidatorConstants;
 import org.catdou.validate.processor.ValidateProcessor;
 import org.catdou.validate.request.ServletRequestParamWrapper;
@@ -29,6 +30,7 @@ import scd.http.MockHttpServletResponse;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,17 +49,21 @@ public class ValidateProcessorTest extends BaseTest {
     }
 
     @Test
-    public void testValidateUrlParam() {
+    public void testValidateUrlParam() throws IOException {
         String filePath = "data.txt";
         MockHttpServletResponse response = new MockHttpServletResponse(filePath);
         ServletRequestParamWrapper servletRequest = createServletRequest();
         ValidateProcessor validateProcessor = new ValidateProcessor(paramConfig, servletRequest, response, filterChain);
+        File file = new File(filePath);
         try {
             validateProcessor.validate();
-            File file = new File(filePath);
             Assert.assertFalse(file.exists());
         } catch (Exception e) {
             Assert.fail("validate fail " + e);
+        } finally {
+            if (file.exists()) {
+                FileUtils.forceDelete(file);
+            }
         }
     }
 

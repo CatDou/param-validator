@@ -23,7 +23,7 @@
                     <rule name="DEFINE" value="scd.util.define.DefineParamValidator" />
                 </rules>
             </param>
-            <param name="list">
+            <param name="list" nullable="true">
                 <rules>
                     <rule name="DEFINE" value="scd.processor.define.ComplexJsonValidator"/>
                 </rules>
