@@ -23,6 +23,11 @@
                     <rule name="DEFINE" value="scd.util.define.DefineParamValidator" />
                 </rules>
             </param>
+            <param name="list">
+                <rules>
+                    <rule name="DEFINE" value="scd.processor.define.ComplexJsonValidator"/>
+                </rules>
+            </param>
         </bodyParams>
     </item>
     <item url="/param/body/{key}/test" method="post" maxBodySize="100" sort="1">

@@ -28,6 +28,7 @@ import scd.http.MockHttpServletRequest;
 import scd.http.MockHttpServletResponse;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,6 +54,8 @@ public class ValidateProcessorTest extends BaseTest {
         ValidateProcessor validateProcessor = new ValidateProcessor(paramConfig, servletRequest, response, filterChain);
         try {
             validateProcessor.validate();
+            File file = new File(filePath);
+            Assert.assertFalse(file.exists());
         } catch (Exception e) {
             Assert.fail("validate fail " + e);
         }
