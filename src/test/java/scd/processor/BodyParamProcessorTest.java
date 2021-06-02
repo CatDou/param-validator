@@ -16,18 +16,30 @@
 
 package scd.processor;
 
-import org.catdou.validate.cache.ValidatorCache;
-import org.catdou.validate.factory.ParamConfigFactory;
-import org.catdou.validate.factory.ParamConfigLoader;
+import org.apache.commons.io.FileUtils;
+import org.catdou.validate.io.FileResourcesUtils;
 import org.catdou.validate.model.config.ParamConfig;
+import org.catdou.validate.model.config.UrlRuleBean;
 import org.catdou.validate.processor.BodyParamProcessor;
+import org.catdou.validate.request.ServletRequestParamWrapper;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
+import scd.base.BaseTest;
+import scd.http.MockHttpServletRequest;
 import scd.http.MockHttpServletResponse;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author James
  */
-public class BodyParamProcessorTest {
+public class BodyParamProcessorTest extends BaseTest {
     private BodyParamProcessor bodyParamProcessor;
 
     private String filePath = "data.txt";
@@ -41,13 +53,122 @@ public class BodyParamProcessorTest {
         bodyParamProcessor = new BodyParamProcessor();
         MockHttpServletResponse response = new MockHttpServletResponse(filePath);
         bodyParamProcessor.setHttpServletResponse(response);
-        ParamConfigFactory paramConfigFactory = new ParamConfigFactory();
-        ValidatorCache validatorCache = new ValidatorCache();
-        ParamConfigLoader paramConfigLoader = paramConfigFactory.createParamConfigLoader("xml");
-        paramConfig = paramConfigLoader.loadParamConfig("classpath*:xml/**/validate_*.xml");
-        paramConfig.setValidatorCache(validatorCache);
-        paramConfig.init();
+        super.init();
+        this.paramConfig = super.paramConfig;
+        bodyParamProcessor.setParamConfig(paramConfig);
     }
 
+
+    @Test
+    public void testJsonList() throws IOException {
+        ServletRequestParamWrapper servletRequestParamWrapper = createServletRequest();
+        bodyParamProcessor.setHttpServletRequest(servletRequestParamWrapper);
+        List<UrlRuleBean> urlRuleBeanList = paramConfig.getUrlRuleBeanList().stream()
+                .filter(urlRuleBean -> "/param/body/{key}".equalsIgnoreCase(urlRuleBean.getUrl()))
+                .collect(Collectors.toList());
+        bodyParamProcessor.setUrlRuleBean(urlRuleBeanList.get(0));
+        File file = new File(filePath);
+        try {
+            bodyParamProcessor.validate();
+            Assert.assertFalse(file.exists());
+        } catch (Exception e) {
+            Assert.fail("validate fail " + e);
+        } finally {
+            if (file.exists()) {
+                FileUtils.forceDelete(file);
+            }
+        }
+    }
+
+    @Test
+    public void testCheckError() throws IOException {
+        ServletRequestParamWrapper servletRequestParamWrapper = createServletErrorRequest();
+        bodyParamProcessor.setHttpServletRequest(servletRequestParamWrapper);
+        List<UrlRuleBean> urlRuleBeanList = paramConfig.getUrlRuleBeanList().stream()
+                .filter(urlRuleBean -> "/param/body/{key}".equalsIgnoreCase(urlRuleBean.getUrl()))
+                .collect(Collectors.toList());
+        bodyParamProcessor.setUrlRuleBean(urlRuleBeanList.get(0));
+        File file = new File(filePath);
+        try {
+            bodyParamProcessor.validate();
+            Assert.assertTrue(file.exists());
+            Assert.assertNotNull(FileResourcesUtils.readStr(file));
+        } catch (Exception e) {
+            Assert.fail("validate fail " + e);
+        } finally {
+            if (file.exists()) {
+                FileUtils.forceDelete(file);
+            }
+        }
+    }
+
+    @Test
+    public void testCheckBigBody() {
+        paramConfig.getCommonConfig().setMaxBodySize(10L);
+        IllegalArgumentException argumentException = Assert.assertThrows(IllegalArgumentException.class, this::createServletRequest);
+        Assert.assertEquals("the http body size is larger than the configuration value", argumentException.getMessage());
+    }
+
+    @Test
+    public void testRuleBeanBig() {
+        ServletRequestParamWrapper servletRequestParamWrapper = createServletErrorRequest();
+        bodyParamProcessor.setHttpServletRequest(servletRequestParamWrapper);
+        List<UrlRuleBean> urlRuleBeanList = paramConfig.getUrlRuleBeanList().stream()
+                .filter(urlRuleBean -> "/param/body/{key}".equalsIgnoreCase(urlRuleBean.getUrl()))
+                .collect(Collectors.toList());
+        UrlRuleBean urlRuleBean = urlRuleBeanList.get(0);
+        urlRuleBean.setMaxBodySize(10L);
+        bodyParamProcessor.setUrlRuleBean(urlRuleBean);
+        IllegalArgumentException argumentException = Assert.assertThrows(IllegalArgumentException.class, bodyParamProcessor::validate);
+        Assert.assertEquals("the request body size is larger than the configuration value", argumentException.getMessage());
+    }
+
+    @Test
+    public void testComplexJson() throws IOException {
+        ServletRequestParamWrapper servletRequestParamWrapper = createComplexJsonRequest();
+        bodyParamProcessor.setHttpServletRequest(servletRequestParamWrapper);
+        List<UrlRuleBean> urlRuleBeanList = paramConfig.getUrlRuleBeanList().stream()
+                .filter(urlRuleBean -> "/param/body/{key}".equalsIgnoreCase(urlRuleBean.getUrl()))
+                .collect(Collectors.toList());
+        bodyParamProcessor.setUrlRuleBean(urlRuleBeanList.get(0));
+        File file = new File(filePath);
+        try {
+            bodyParamProcessor.validate();
+            Assert.assertFalse(file.exists());
+        } catch (Exception e) {
+            Assert.fail("validate fail " + e);
+        } finally {
+            if (file.exists()) {
+                FileUtils.forceDelete(file);
+            }
+        }
+    }
+
+    public ServletRequestParamWrapper createServletRequest() {
+        MockHttpServletRequest request = new MockHttpServletRequest("/param/body/1", "POST");
+        Map<String, String> urlParamMap = new HashMap<>();
+        urlParamMap.put("taskId", "123");
+        request.setUrlParamMap(urlParamMap);
+        String bodyStr = "[{\"id\":0,\"name\":\"scd\"},{\"id\":1,\"name\":\"scd\"},{\"id\":2,\"name\":\"scd\"},{\"id\":3,\"name\":\"scd\"},{\"id\":4,\"name\":\"scd\"}]";
+        return super.createBodyServletRequest(request, urlParamMap, bodyStr);
+    }
+
+    public ServletRequestParamWrapper createServletErrorRequest() {
+        MockHttpServletRequest request = new MockHttpServletRequest("/param/body/1", "POST");
+        Map<String, String> urlParamMap = new HashMap<>();
+        urlParamMap.put("taskId", "123");
+        request.setUrlParamMap(urlParamMap);
+        String bodyStr = "[{\"id\":0,\"name\":\"scd\"},{\"id\":\"scd\",\"name\":\"scd\"},{\"id\":2,\"name\":\"scd\"},{\"id\":3,\"name\":\"scd\"},{\"id\":4,\"name\":\"scd\"}]";
+        return super.createBodyServletRequest(request, urlParamMap, bodyStr);
+    }
+
+    public ServletRequestParamWrapper createComplexJsonRequest() {
+        MockHttpServletRequest request = new MockHttpServletRequest("/param/body/1", "POST");
+        Map<String, String> urlParamMap = new HashMap<>();
+        urlParamMap.put("taskId", "123");
+        request.setUrlParamMap(urlParamMap);
+        String bodyStr = "[{\"id\":0,\"list\":[{\"id\":0}],\"name\":\"scd\"},{\"id\":1,\"list\":[{\"id\":1}],\"name\":\"scd\"},{\"id\":2,\"list\":[],\"name\":\"scd\"},{\"id\":3,\"list\":[{\"id\":3}],\"name\":\"scd\"},{\"id\":4,\"list\":[{\"id\":4}],\"name\":\"scd\"}]";
+        return super.createBodyServletRequest(request, urlParamMap, bodyStr);
+    }
 
 }
