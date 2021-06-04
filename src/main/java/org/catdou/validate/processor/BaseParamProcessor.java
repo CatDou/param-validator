@@ -47,9 +47,9 @@ public class BaseParamProcessor {
 
     protected ParamConfig paramConfig;
 
-    public ParamValidator getParamValidator(ValidatorCache validatorCache, CheckRule checkRule) {
+    public ParamValidator getParamValidator(CheckRule checkRule) {
         String ruleName = checkRule.getName().toUpperCase();
-        Map<String, ParamValidator> paramValidatorMap = validatorCache.getParamValidatorMap();
+        Map<String, ParamValidator> paramValidatorMap = paramConfig.getValidatorCache().getParamValidatorMap();
         ParamValidator paramValidator;
         // if define
         if (ValidatorType.DEFINE.name().equals(ruleName)) {
@@ -85,9 +85,8 @@ public class BaseParamProcessor {
     }
 
     public boolean checkRule(String configName, Object reqParam, List<CheckRule> checkRuleList) {
-        ValidatorCache validatorCache = paramConfig.getValidatorCache();
         for (CheckRule checkRule : checkRuleList) {
-            ParamValidator paramValidator = getParamValidator(validatorCache, checkRule);
+            ParamValidator paramValidator = getParamValidator(checkRule);
             InputParam inputParam = new InputParam(configName, reqParam);
             checkRule.setParamConfig(paramConfig);
             ValidateResult validateResult = paramValidator.validate(inputParam, checkRule);

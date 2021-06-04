@@ -71,4 +71,58 @@
             </param>
         </bodyParams>
     </item>
+    <item url="/param/body" method="post" maxBodySize="1000" sort="0">
+        <bodyParams>
+            <param name="id">
+                <rules>
+                    <rule name="REGEXP" value="\d+{0,20}" />
+                    <rule name="DEFINE" value="scd.util.define.DefineParamValidator" />
+                </rules>
+            </param>
+            <param name="list" nullable="true">
+                <rules>
+                    <rule name="DEFINE" value="scd.processor.define.ComplexJsonValidator"/>
+                </rules>
+            </param>
+        </bodyParams>
+    </item>
+    <item url="/param/{path}" method="post" >
+        <pathParams>
+            <param name="{path}">
+                <rules>
+                    <rule name="REGEXP" value="\S+{0,30}" />
+                    <rule name="OGNL" value="@scd.enums.Param@contains(path)" />
+                </rules>
+            </param>
+        </pathParams>
+    </item>
+    <item url="/param/{path}/{key}" method="post" >
+        <pathParams>
+            <param name="{path}">
+                <rules>
+                    <rule name="REGEXP" value="\S+{0,30}" />
+                    <rule name="OGNL" value="@scd.enums.Param@contains(path)" />
+                </rules>
+            </param>
+        </pathParams>
+    </item>
+    <item url="/param/url" method="post" >
+        <urlParams>
+            <param name="name">
+                <rules>
+                    <rule name="REGEXP" value="\S+{0,30}" />
+                </rules>
+            </param>
+            <param name="age">
+                <rules>
+                    <rule name="OGNL" value="age > 10" />
+                </rules>
+            </param>
+            <param name="score">
+                <rules>
+                    <rule name="OGNL" value="score &gt;= 0 &amp;&amp; score &lt;= 100"/>
+                </rules>
+            </param>
+        </urlParams>
+    </item>
 </urls>

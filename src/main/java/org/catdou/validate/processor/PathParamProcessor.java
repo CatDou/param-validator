@@ -42,7 +42,7 @@ public class PathParamProcessor extends BaseParamProcessor {
         UrlPath configUrlPath = HttpUtil.getUrlPath(configUrl);
         UrlPath inputPath = HttpUtil.getUrlPath(url);
         if (configUrlPath.getPaths().size() != inputPath.getPaths().size()) {
-            throw new ConfigException("config path error, input url " + url);
+            throw new ConfigException("config path error, input url " + configUrl);
         }
         Map<String, String> paramMap = createParamMap(configUrlPath, inputPath);
         for (Param param : paramList) {

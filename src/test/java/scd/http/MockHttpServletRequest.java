@@ -37,6 +37,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -49,9 +50,9 @@ public class MockHttpServletRequest implements HttpServletRequest {
 
     private ByteArrayInputStream byteArrayInputStream;
 
-    private Map<String, String> urlParamMap;
+    private Map<String, String> urlParamMap = new HashMap<>();
 
-    private Map<String, String> headerParamMap;
+    private Map<String, String> headerParamMap = new HashMap<>();
 
     public MockHttpServletRequest() {
 

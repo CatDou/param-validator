@@ -64,7 +64,7 @@ public class BodyParamProcessorTest extends BaseTest {
         ServletRequestParamWrapper servletRequestParamWrapper = createServletRequest();
         bodyParamProcessor.setHttpServletRequest(servletRequestParamWrapper);
         List<UrlRuleBean> urlRuleBeanList = paramConfig.getUrlRuleBeanList().stream()
-                .filter(urlRuleBean -> "/param/body/{key}".equalsIgnoreCase(urlRuleBean.getUrl()))
+                .filter(urlRuleBean -> "/param/body".equalsIgnoreCase(urlRuleBean.getUrl()))
                 .collect(Collectors.toList());
         bodyParamProcessor.setUrlRuleBean(urlRuleBeanList.get(0));
         File file = new File(filePath);
@@ -85,7 +85,7 @@ public class BodyParamProcessorTest extends BaseTest {
         ServletRequestParamWrapper servletRequestParamWrapper = createServletErrorRequest();
         bodyParamProcessor.setHttpServletRequest(servletRequestParamWrapper);
         List<UrlRuleBean> urlRuleBeanList = paramConfig.getUrlRuleBeanList().stream()
-                .filter(urlRuleBean -> "/param/body/{key}".equalsIgnoreCase(urlRuleBean.getUrl()))
+                .filter(urlRuleBean -> "/param/body".equalsIgnoreCase(urlRuleBean.getUrl()))
                 .collect(Collectors.toList());
         bodyParamProcessor.setUrlRuleBean(urlRuleBeanList.get(0));
         File file = new File(filePath);
@@ -114,7 +114,7 @@ public class BodyParamProcessorTest extends BaseTest {
         ServletRequestParamWrapper servletRequestParamWrapper = createServletErrorRequest();
         bodyParamProcessor.setHttpServletRequest(servletRequestParamWrapper);
         List<UrlRuleBean> urlRuleBeanList = paramConfig.getUrlRuleBeanList().stream()
-                .filter(urlRuleBean -> "/param/body/{key}".equalsIgnoreCase(urlRuleBean.getUrl()))
+                .filter(urlRuleBean -> "/param/body".equalsIgnoreCase(urlRuleBean.getUrl()))
                 .collect(Collectors.toList());
         UrlRuleBean urlRuleBean = urlRuleBeanList.get(0);
         urlRuleBean.setMaxBodySize(10L);
@@ -128,7 +128,7 @@ public class BodyParamProcessorTest extends BaseTest {
         ServletRequestParamWrapper servletRequestParamWrapper = createComplexJsonRequest();
         bodyParamProcessor.setHttpServletRequest(servletRequestParamWrapper);
         List<UrlRuleBean> urlRuleBeanList = paramConfig.getUrlRuleBeanList().stream()
-                .filter(urlRuleBean -> "/param/body/{key}".equalsIgnoreCase(urlRuleBean.getUrl()))
+                .filter(urlRuleBean -> "/param/body".equalsIgnoreCase(urlRuleBean.getUrl()))
                 .collect(Collectors.toList());
         bodyParamProcessor.setUrlRuleBean(urlRuleBeanList.get(0));
         File file = new File(filePath);
@@ -147,8 +147,6 @@ public class BodyParamProcessorTest extends BaseTest {
     public ServletRequestParamWrapper createServletRequest() {
         MockHttpServletRequest request = new MockHttpServletRequest("/param/body/1", "POST");
         Map<String, String> urlParamMap = new HashMap<>();
-        urlParamMap.put("taskId", "123");
-        request.setUrlParamMap(urlParamMap);
         String bodyStr = "[{\"id\":0,\"name\":\"scd\"},{\"id\":1,\"name\":\"scd\"},{\"id\":2,\"name\":\"scd\"},{\"id\":3,\"name\":\"scd\"},{\"id\":4,\"name\":\"scd\"}]";
         return super.createBodyServletRequest(request, urlParamMap, bodyStr);
     }
@@ -156,8 +154,6 @@ public class BodyParamProcessorTest extends BaseTest {
     public ServletRequestParamWrapper createServletErrorRequest() {
         MockHttpServletRequest request = new MockHttpServletRequest("/param/body/1", "POST");
         Map<String, String> urlParamMap = new HashMap<>();
-        urlParamMap.put("taskId", "123");
-        request.setUrlParamMap(urlParamMap);
         String bodyStr = "[{\"id\":0,\"name\":\"scd\"},{\"id\":\"scd\",\"name\":\"scd\"},{\"id\":2,\"name\":\"scd\"},{\"id\":3,\"name\":\"scd\"},{\"id\":4,\"name\":\"scd\"}]";
         return super.createBodyServletRequest(request, urlParamMap, bodyStr);
     }
@@ -165,8 +161,6 @@ public class BodyParamProcessorTest extends BaseTest {
     public ServletRequestParamWrapper createComplexJsonRequest() {
         MockHttpServletRequest request = new MockHttpServletRequest("/param/body/1", "POST");
         Map<String, String> urlParamMap = new HashMap<>();
-        urlParamMap.put("taskId", "123");
-        request.setUrlParamMap(urlParamMap);
         String bodyStr = "[{\"id\":0,\"list\":[{\"id\":0}],\"name\":\"scd\"},{\"id\":1,\"list\":[{\"id\":1}],\"name\":\"scd\"},{\"id\":2,\"list\":[],\"name\":\"scd\"},{\"id\":3,\"list\":[{\"id\":3}],\"name\":\"scd\"},{\"id\":4,\"list\":[{\"id\":4}],\"name\":\"scd\"}]";
         return super.createBodyServletRequest(request, urlParamMap, bodyStr);
     }
