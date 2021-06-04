@@ -96,7 +96,7 @@
             </param>
         </pathParams>
     </item>
-    <item url="/param/{path}/{key}" method="post" >
+    <item url="/param/{path}/{key}" method="post" sort="1">
         <pathParams>
             <param name="{path}">
                 <rules>

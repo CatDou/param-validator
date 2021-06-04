@@ -51,6 +51,6 @@ public class XmlParseTest {
         XmlDocument xmlDocument = new XmlDocument(resources[0].getFile());
         UrlParamRuleXmlParser paramRuleXmlParser = new UrlParamRuleXmlParser(xmlDocument);
         List<UrlRuleBean> urlRuleBeans = paramRuleXmlParser.parseUrlParamRuleXml();
-        Assert.assertEquals(3, urlRuleBeans.size());
+        Assert.assertEquals(7, urlRuleBeans.size());
     }
 }
