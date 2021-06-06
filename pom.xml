@@ -22,7 +22,7 @@
 
     <groupId>com.github.catdou</groupId>
     <artifactId>param-validator</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <version>1.3</version>
 
     <name>param-validator</name>
     <description>Java Web Param Validator</description>
