@@ -18,7 +18,6 @@ package scd.processor;
 
 import org.apache.commons.io.FileUtils;
 import org.catdou.validate.io.FileResourcesUtils;
-import org.catdou.validate.model.config.ParamConfig;
 import org.catdou.validate.model.config.UrlRuleBean;
 import org.catdou.validate.processor.BodyParamProcessor;
 import org.catdou.validate.request.ServletRequestParamWrapper;
@@ -44,17 +43,14 @@ public class BodyParamProcessorTest extends BaseTest {
 
     private String filePath = "data.txt";
 
-    private ParamConfig paramConfig;
-
 
 
     @Before
     public void init() {
         bodyParamProcessor = new BodyParamProcessor();
+        super.init();
         MockHttpServletResponse response = new MockHttpServletResponse(filePath);
         bodyParamProcessor.setHttpServletResponse(response);
-        super.init();
-        this.paramConfig = super.paramConfig;
         bodyParamProcessor.setParamConfig(paramConfig);
     }
 
