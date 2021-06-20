@@ -13,6 +13,9 @@
 ### web.xml
 [https://github.com/shootercheng/ssm_shiro_blog](https://github.com/shootercheng/ssm_shiro_blog)
 
+## api parameter verification file generation project
+[https://github.com/CatDou/param-validator-generate](https://github.com/CatDou/param-validator-generate)
+
 ## Maven
 ```xml
 <dependency>
@@ -24,5 +27,5 @@
 
 ## Gradle
 ```text
-implementation 'com.github.catdou:param-validator:1.2'
+implementation 'com.github.catdou:param-validator:1.3'
 ```
