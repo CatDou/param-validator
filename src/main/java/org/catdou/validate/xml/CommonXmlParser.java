@@ -16,7 +16,9 @@
 
 package org.catdou.validate.xml;
 
+import org.catdou.validate.handler.error.ErrorHandler;
 import org.catdou.validate.model.config.CommonConfig;
+import org.catdou.validate.util.ReflectUtil;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -49,6 +51,14 @@ public class CommonXmlParser extends XmlParser {
         if (maxBodySizeNode instanceof Node) {
             String text = ((Node) maxBodySizeNode).getTextContent();
             commonConfig.setMaxBodySize(Long.valueOf(text));
+        }
+        Object globalErrorHandler = evaluate("/common/globalErrorHandler", document, XPathConstants.NODE);
+        if (globalErrorHandler instanceof Node) {
+            String text = ((Node) globalErrorHandler).getTextContent();
+            Object object = ReflectUtil.createNewInstance(text);
+            if (object instanceof ErrorHandler) {
+                commonConfig.setGlobalErrorHandler((ErrorHandler) object);
+            }
         }
         return commonConfig;
     }

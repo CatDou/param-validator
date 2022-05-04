@@ -20,10 +20,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.catdou.validate.enums.ValidatorType;
+import org.catdou.validate.log.ValidatorLog;
+import org.catdou.validate.log.ValidatorLogFactory;
 import org.catdou.validate.model.InputParam;
 import org.catdou.validate.model.ValidateResult;
 import org.catdou.validate.model.config.CheckRule;
 import org.catdou.validate.model.config.Param;
+import org.catdou.validate.model.config.UrlRuleBean;
 import org.catdou.validate.type.ParamValidator;
 import org.catdou.validate.util.HttpUtil;
 import org.catdou.validate.util.ReflectUtil;
@@ -38,6 +41,7 @@ import java.util.stream.Collectors;
  */
 public class BodyParamProcessor extends BaseParamProcessor {
 
+    @Override
     public boolean validate() {
         Long urlBodySize = urlRuleBean.getMaxBodySize();
         if (urlBodySize != null && httpServletRequest.getBodySize() > urlRuleBean.getMaxBodySize()) {
@@ -105,10 +109,15 @@ public class BodyParamProcessor extends BaseParamProcessor {
             InputParam inputParam = new InputParam(configName, JSON.toJSONString(dataObj));
             ValidateResult validateResult = paramValidator.validate(inputParam, checkRule);
             if (validateResult != null && !validateResult.isSuccess()) {
-                HttpUtil.printObject(httpServletResponse, validateResult);
+                urlRuleBean.getErrorHandler().handler(httpServletRequest, httpServletResponse, validateResult);
                 return false;
             }
         }
         return true;
+    }
+
+    @Override
+    boolean isNeedCheck(UrlRuleBean urlRuleBean) {
+        return !CollectionUtils.isEmpty(urlRuleBean.getBodyParams());
     }
 }

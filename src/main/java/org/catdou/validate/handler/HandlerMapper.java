@@ -17,6 +17,7 @@
 package org.catdou.validate.handler;
 
 import org.catdou.validate.exception.ConfigException;
+import org.catdou.validate.handler.error.ErrorHandler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +34,7 @@ public class HandlerMapper {
         CLAZZ_MAP.put(Long.class, new LongTypeHandler());
         CLAZZ_MAP.put(boolean.class, new BooleanTypeHandler());
         CLAZZ_MAP.put(int.class, new IntegerTypeHandler());
+        CLAZZ_MAP.put(ErrorHandler.class, new ErrorHandlerTypeHandler());
     }
 
     public static BaseTypeHandler getTypeHandler(Class<?> clazz) {

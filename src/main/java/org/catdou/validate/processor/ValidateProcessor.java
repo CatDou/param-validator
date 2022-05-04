@@ -17,6 +17,7 @@
 package org.catdou.validate.processor;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import org.catdou.validate.handler.error.DefaultErrorHandler;
 import org.catdou.validate.log.ValidatorLog;
 import org.catdou.validate.log.ValidatorLogFactory;
 import org.catdou.validate.util.UrlMatchHelper;
@@ -49,6 +50,8 @@ public class ValidateProcessor {
 
     private FilterChain filterChain;
 
+    private List<BaseParamProcessor> validateChainList = new ArrayList<>();
+
 
     public ValidateProcessor(ParamConfig paramConfig, ServletRequestParamWrapper httpServletRequest,
                              HttpServletResponse httpServletResponse, FilterChain filterChain) {
@@ -56,6 +59,13 @@ public class ValidateProcessor {
         this.httpServletRequest = httpServletRequest;
         this.httpServletResponse = httpServletResponse;
         this.filterChain = filterChain;
+        initProcessor();
+    }
+
+    private void initProcessor() {
+        validateChainList.add(new PathParamProcessor());
+        validateChainList.add(new UrlParamProcessor());
+        validateChainList.add(new BodyParamProcessor());
     }
 
     public void validate() throws IOException, ServletException {
@@ -73,31 +83,12 @@ public class ValidateProcessor {
             }
         }
         UrlRuleBean urlRuleBean = matchedList.get(0);
-        List<Param> urlParams = urlRuleBean.getUrlParams();
-        if (!CollectionUtils.isEmpty(urlParams)) {
-            UrlParamProcessor urlParamProcessor = new UrlParamProcessor();
-            setBaseCommonProperties(urlParamProcessor, urlRuleBean);
-            if (!urlParamProcessor.validate()) {
-                LOGGER.error("validate url param error, url " + httpServletRequest.getServletPath());
-                return;
-            }
-        }
-        List<Param> pathParams = urlRuleBean.getPathParams();
-        if (!CollectionUtils.isEmpty(pathParams)) {
-            PathParamProcessor pathParamProcessor = new PathParamProcessor();
-            setBaseCommonProperties(pathParamProcessor, urlRuleBean);
-            if (!pathParamProcessor.validate()) {
-                LOGGER.error("validate path param error, url " + httpServletRequest.getServletPath());
-                return;
-            }
-        }
-        List<Param> bodyParams = urlRuleBean.getBodyParams();
-        if (!CollectionUtils.isEmpty(bodyParams)) {
-            BodyParamProcessor bodyParamProcessor = new BodyParamProcessor();
-            setBaseCommonProperties(bodyParamProcessor, urlRuleBean);
-            if (!bodyParamProcessor.validate()) {
-                LOGGER.error("validate body param error, url " + httpServletRequest.getServletPath());
-                return;
+        for (BaseParamProcessor baseParamProcessor : validateChainList) {
+            if (baseParamProcessor.isNeedCheck(urlRuleBean)) {
+                setBaseCommonProperties(baseParamProcessor, urlRuleBean);
+                if (!baseParamProcessor.validate()) {
+                    return;
+                }
             }
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);

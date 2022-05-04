@@ -8,4 +8,5 @@
         <url>/**/*.css</url>
     </whiteList>
     <maxBodySize>100000</maxBodySize>
+    <globalErrorHandler>scd.error.ErrorHandlerGlobalTest</globalErrorHandler>
 </common>

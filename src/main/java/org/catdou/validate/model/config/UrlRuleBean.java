@@ -16,6 +16,11 @@
 
 package org.catdou.validate.model.config;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import org.catdou.validate.handler.error.DefaultErrorHandler;
+import org.catdou.validate.handler.error.ErrorHandler;
+import org.catdou.validate.json.ErrorHandlerDeserialize;
+
 import java.util.List;
 
 /**
@@ -37,6 +42,9 @@ public class UrlRuleBean implements Comparable<UrlRuleBean> {
     private Long maxBodySize;
 
     private boolean checkAllParam;
+
+    @JSONField(deserializeUsing = ErrorHandlerDeserialize.class)
+    private ErrorHandler errorHandler;
 
     public String getUrl() {
         return url;
@@ -100,6 +108,24 @@ public class UrlRuleBean implements Comparable<UrlRuleBean> {
 
     public void setCheckAllParam(boolean checkAllParam) {
         this.checkAllParam = checkAllParam;
+    }
+
+    public ErrorHandler getErrorHandler() {
+        return errorHandler;
+    }
+
+    public void setErrorHandler(ErrorHandler errorHandler) {
+        this.errorHandler = errorHandler;
+    }
+
+    public void bindErrorHandler(CommonConfig commonConfig) {
+        if (errorHandler == null) {
+            if (commonConfig.getGlobalErrorHandler() != null) {
+                this.errorHandler = commonConfig.getGlobalErrorHandler();
+            } else {
+                this.errorHandler = new DefaultErrorHandler();
+            }
+        }
     }
 
     @Override

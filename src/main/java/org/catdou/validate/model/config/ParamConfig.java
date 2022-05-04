@@ -17,6 +17,7 @@
 package org.catdou.validate.model.config;
 
 import org.catdou.validate.cache.ValidatorCache;
+import org.catdou.validate.handler.error.DefaultErrorHandler;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +38,10 @@ public class ParamConfig {
 
     public void init() {
         methodUrlMap = urlRuleBeanList.stream().collect(Collectors.groupingBy(UrlRuleBean::getMethod));
+        urlRuleBeanList.forEach(urlRuleBen -> urlRuleBen.bindErrorHandler(commonConfig));
+    }
+
+    private void setErrorHandler(UrlRuleBean urlRuleBean) {
     }
 
     public CommonConfig getCommonConfig() {
