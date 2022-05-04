@@ -16,8 +16,11 @@
 
 package org.catdou.validate.processor;
 
+import org.catdou.validate.log.ValidatorLog;
+import org.catdou.validate.log.ValidatorLogFactory;
 import org.catdou.validate.model.config.CheckRule;
 import org.catdou.validate.model.config.Param;
+import org.catdou.validate.model.config.UrlRuleBean;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -26,7 +29,9 @@ import java.util.List;
  * @author James
  */
 public class UrlParamProcessor extends BaseParamProcessor {
+    private static final ValidatorLog LOGGER = ValidatorLogFactory.getLogger(UrlParamProcessor.class);
 
+    @Override
     public boolean validate() {
         List<Param> paramList = urlRuleBean.getUrlParams();
         if (CollectionUtils.isEmpty(paramList)) {
@@ -41,5 +46,10 @@ public class UrlParamProcessor extends BaseParamProcessor {
             }
         }
         return true;
+    }
+
+    @Override
+    boolean isNeedCheck(UrlRuleBean urlRuleBean) {
+        return !CollectionUtils.isEmpty(urlRuleBean.getUrlParams());
     }
 }

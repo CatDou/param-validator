@@ -52,9 +52,11 @@ public class JsonConfigLoaderTest  {
         Assert.assertFalse(commonConfig.isCheckAllUrl());
         Assert.assertEquals(3, commonConfig.getWhiteList().size());
         Assert.assertEquals(100000, commonConfig.getMaxBodySize().intValue());
+        Assert.assertNotNull(commonConfig.getGlobalErrorHandler());
         List<UrlRuleBean> urlRuleBeanList = paramConfig.getUrlRuleBeanList();
         Assert.assertTrue(urlRuleBeanList.size() > 0);
         Assert.assertNotNull(urlRuleBeanList.get(0).getUrl());
         Assert.assertNotNull(urlRuleBeanList.get(0).getMethod());
+        Assert.assertNotNull(urlRuleBeanList.get(0).getErrorHandler());
     }
 }

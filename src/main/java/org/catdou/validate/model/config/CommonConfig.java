@@ -16,6 +16,10 @@
 
 package org.catdou.validate.model.config;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import org.catdou.validate.handler.error.ErrorHandler;
+import org.catdou.validate.json.ErrorHandlerDeserialize;
+
 import java.util.List;
 
 /**
@@ -27,6 +31,9 @@ public class CommonConfig {
     private List<String> whiteList;
 
     private Long maxBodySize = 10000L;
+
+    @JSONField(deserializeUsing = ErrorHandlerDeserialize.class)
+    private ErrorHandler globalErrorHandler;
 
     public boolean isCheckAllUrl() {
         return checkAllUrl;
@@ -50,5 +57,13 @@ public class CommonConfig {
 
     public void setMaxBodySize(Long maxBodySize) {
         this.maxBodySize = maxBodySize;
+    }
+
+    public ErrorHandler getGlobalErrorHandler() {
+        return globalErrorHandler;
+    }
+
+    public void setGlobalErrorHandler(ErrorHandler globalErrorHandler) {
+        this.globalErrorHandler = globalErrorHandler;
     }
 }

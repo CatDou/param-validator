@@ -42,6 +42,7 @@
     ],
     "maxBodySize": 100000,
     "checkAllParam":true,
-    "sort": 0
+    "sort": 0,
+    "errorHandler": "scd.error.ErrorHandlerTest"
   }
 ]

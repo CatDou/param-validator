@@ -16,6 +16,7 @@
 
 package scd.xml;
 
+import org.catdou.validate.handler.error.ErrorHandler;
 import org.catdou.validate.io.FileResourcesUtils;
 import org.catdou.validate.model.config.CommonConfig;
 import org.catdou.validate.model.config.UrlRuleBean;
@@ -43,6 +44,7 @@ public class XmlParseTest {
         Assert.assertFalse(commonConfig.isCheckAllUrl());
         Assert.assertEquals(3, commonConfig.getWhiteList().size());
         Assert.assertEquals(100000, commonConfig.getMaxBodySize().intValue());
+        Assert.assertNotNull(commonConfig.getGlobalErrorHandler());
     }
 
     @Test
@@ -52,5 +54,6 @@ public class XmlParseTest {
         UrlParamRuleXmlParser paramRuleXmlParser = new UrlParamRuleXmlParser(xmlDocument);
         List<UrlRuleBean> urlRuleBeans = paramRuleXmlParser.parseUrlParamRuleXml();
         Assert.assertEquals(7, urlRuleBeans.size());
+        Assert.assertNotNull(urlRuleBeans.get(0).getErrorHandler());
     }
 }

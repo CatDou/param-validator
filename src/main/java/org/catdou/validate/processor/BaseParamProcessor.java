@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * @author James
  */
-public class BaseParamProcessor {
+public abstract class BaseParamProcessor {
     protected ServletRequestParamWrapper httpServletRequest;
 
     protected HttpServletResponse httpServletResponse;
@@ -46,6 +46,21 @@ public class BaseParamProcessor {
     protected UrlRuleBean urlRuleBean;
 
     protected ParamConfig paramConfig;
+
+    /**
+     * is need check
+     * @param urlRuleBean
+     * @return true or false
+     */
+    abstract boolean isNeedCheck(UrlRuleBean urlRuleBean);
+
+    /**
+     * validate
+     * @return true or false
+     */
+    abstract boolean validate();
+
+
 
     public ParamValidator getParamValidator(CheckRule checkRule) {
         String ruleName = checkRule.getName().toUpperCase();
@@ -68,6 +83,7 @@ public class BaseParamProcessor {
         return paramValidator;
     }
 
+
     public boolean checkRule(Param configParam, Object reqParam, List<CheckRule> checkRuleList) {
         String configName = configParam.getName();
         if (reqParam == null) {
@@ -77,7 +93,7 @@ public class BaseParamProcessor {
                 ValidateResult validateResult = new ValidateResult();
                 String msg = "request param " + configName + " is null";
                 validateResult.setMsg(msg);
-                HttpUtil.printObject(httpServletResponse, validateResult);
+                urlRuleBean.getErrorHandler().handler(httpServletRequest, httpServletResponse, validateResult);
                 return false;
             }
         }
@@ -91,7 +107,7 @@ public class BaseParamProcessor {
             checkRule.setParamConfig(paramConfig);
             ValidateResult validateResult = paramValidator.validate(inputParam, checkRule);
             if (!validateResult.isSuccess()) {
-                HttpUtil.printObject(httpServletResponse, validateResult);
+                urlRuleBean.getErrorHandler().handler(httpServletRequest, httpServletResponse, validateResult);
                 return false;
             }
         }
